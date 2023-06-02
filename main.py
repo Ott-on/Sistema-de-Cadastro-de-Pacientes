@@ -1,70 +1,151 @@
 import pandas
-123
+
 #  listas  com os dados dos pacientes
 
-informacoes_paciente = []
+informacoes_pacientes = []
 
-todas_informacoes = []
+informacoes_doencas = []
 
-# função cadastrar paciente
+informacoes_registros = []
 
-def cadastrar_paciente():
-  global informacoes_paciente
+informacoes_relatorios = []
+
+class CadastroPaciente():
+  def __init__(self):
+
+    pass
+
+  #função cadastrar paciente
+
+  def cadastrar_paciente(self):
+    global informacoes_pacientes
+    
+    cadastro_paciente = []
+
+    cadastro_paciente.append(input('\nNome do paciente: '))
+    cadastro_paciente.append(input('CPF do paciente: '))
+    cadastro_paciente.append(input('Email do paciente: '))
+    cadastro_paciente.append(input('Telefone do paciente: '))
+    cadastro_paciente.append(input('Celular do paciente: '))
+    cadastro_paciente.append(input('Data de Nascimento do paciente: '))
+    cadastro_paciente.append(input('Sexo do paciente: '))
+    cadastro_paciente.append(input('Estado Civil do paciente: '))
+
+    informacoes_pacientes.append(cadastro_paciente)
+
+  # função remover paciente
+
+  def remover_cadastro(self):
+    global informacoes_pacientes
+
+    paciente = 0
+
+    remover = input('digite o CPF do paciente: ')
+
+    for i in informacoes_pacientes:
+      if i[1] == remover:
+        todas_informacoes.pop(paciente)
+        
+      paciente += 1
+
+
+  # função alterar cadatro
+
+  def alterar_cadastro(self):
+    global informacoes_pacientes
+
+    alterar = input('digite o cpf do paciente que deseja alterar informações: ')
+    
+    paciente = 0
+    
+    for i in informacoes_pacientes:
+      if i[1] == alterar:
+        o_que = int(input('o que você deseja alterar: nome (1), cpf (2), Email(3), Telefone(4), Celular(5), Data de nascimento(6), Sexo do paciente(7), Estado Civil(8)'))
+        informacoes_pacientes[paciente][o_que - 1] = input('Digite o novo dado: ')
+      paciente += 1
+
+        
+  # função consultar informações
+
+  def consultar_cadastro(self):
+    global informacoes_pacientes
+
+    consulta = input('Digite o cpf ou o nome do paciente que deseja consultar informações: ')
+
+    for i in informacoes_pacientes:
+      if i[1] == consulta or i[0] == consulta:
+        print(i)
+
+
+    
+
+class CadastroDoenca():
+  def __init__(self):
+
+    pass
   
-  cadastro_paciente = []
+  # função  cadastrar doenças
 
-  cadastro_paciente.append(input('\nNome do paciente: ')) 1233
-  cadastro_paciente.append(input('CPF do paciente: '))
-  cadastro_paciente.append(input('Email do paciente: '))
-  cadastro_paciente.append(input('Telefone do paciente: '))
-  cadastro_paciente.append(input('Celular do paciente: '))
-  cadastro_paciente.append(input('Data de Nascimento do paciente: '))
-  cadastro_paciente.append(input('Sexo do paciente: '))
-  cadastro_paciente.append(input('Estado Civil do paciente: '))
-
-  informacoes_paciente.append(cadastro_paciente)
   
- # função remover paciente
+  
+  def cadastrar_doenca(self):
+    global informacoes_doencas
+    print('fewgverhjnrt6ju65')
+    cadastro_doenca = []
 
-def remover_cadastro():
-  global informacoes_paciente, todas_informações
+    cadastro_doenca.append(input('Digite o código da doença: '))
+    cadastro_doenca.append(input('Digite o nome da doenca: '))
 
-  contador = 0
+    informacoes_doencas.append(cadastro_doenca)
+    
 
-  remover = input('digite o CPF do paciente: ')
 
-  for i in todas_informacoes:
-    if i[0][1] == remover:
-      todas_informacoes.pop(contador)
+# criando objetos
+
+funcionalidade_1 = CadastroPaciente()
+funcionalidade_2 = CadastroDoenca()
+
+
+while True:
+
+  funcionalidade = input('\nCadastrar paciente (1), cadastrar código de doença (2), registrar atendimento ao paciente (3), relatório (4), encerrar (s): ')
+
+  # menu de cadastramento do paciente
+
+  if funcionalidade == '1':
+
+    opcoes_cadastro_paciente = input('Cadastrar (1), Remover (2), Alterar (3), Consultar nome/CPF (4): ')
+
+    if opcoes_cadastro_paciente == '1':
+      funcionalidade_1.cadastrar_paciente()
+
+    elif opcoes_cadastro_paciente == '2':
+      funcionalidade_1.remover_cadastro()
       
-    contador += 1
-  
- # função alterar cadatro
+    elif opcoes_cadastro_paciente == '3':
+      funcionalidade_1.alterar_cadastro()
 
-def alterar_cadastro():
-  global informações_paciente, todas_informacoes
+    else:
+      funcionalidade_1.consultar_cadastro()
 
-  alterar = input()
 
-# menu de cadastramento
+  # menu de cadastramento de doença
 
-opcoes = input('Cadastrar (1), Remover (2), Alterar (3), Consultar nome/CPF (4): ')
+  if funcionalidade == '2':
 
-if opcoes == '1':
-  cadastrar_paciente()
+    opcoes_cadastro_doenca = input('Cadastrar (1), Remover (2), Alterar (3), Consultar (4): ')
 
-elif opcoes == '2':
-  remover_cadastro()
+    if opcoes_cadastro_doenca == '1':
+      funcionalidade_2.cadastrar_doenca()
 
 
 
 
-todas_informacoes.append(informacoes_paciente)
-informacoes_paciente = []
 
-print(informacoes_paciente)
-print(todas_informacoes)
 
+
+print(informacoes_pacientes)
+print(informacoes_doencas)
 
 
 
