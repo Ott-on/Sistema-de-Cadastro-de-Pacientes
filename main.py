@@ -44,7 +44,7 @@ class CadastroPaciente():
 
     for i in informacoes_pacientes:
       if i[1] == remover:
-        todas_informacoes.pop(paciente)
+        informacoes_pacientes.pop(paciente)
         
       paciente += 1
 
@@ -75,7 +75,9 @@ class CadastroPaciente():
     for i in informacoes_pacientes:
       if i[1] == consulta or i[0] == consulta:
         print(i)
-
+    else:
+      print("\nEste paciente ainda não foi cadastrado, cadastre-o:")
+      funcionalidade_1.cadastrar_paciente()
 
     
 
@@ -108,8 +110,8 @@ funcionalidade_2 = CadastroDoenca()
 
 while True:
 
-  funcionalidade = input('\nCadastrar paciente (1), cadastrar código de doença (2), registrar atendimento ao paciente (3), relatório (4), encerrar (s): ')
-
+  funcionalidade = input('\nCadastro do paciente (1), cadastrar código de doença (2), registrar atendimento ao paciente (3), relatório (4), encerrar (s): ')
+    
   # menu de cadastramento do paciente
 
   if funcionalidade == '1':
@@ -125,24 +127,21 @@ while True:
     elif opcoes_cadastro_paciente == '3':
       funcionalidade_1.alterar_cadastro()
 
-    else:
+    elif opcoes_cadastro_paciente == '4':
       funcionalidade_1.consultar_cadastro()
 
-
+  elif funcionalidade == 's':
+    break
   # menu de cadastramento de doença
 
-  if funcionalidade == '2':
+  elif funcionalidade == '2':
 
     opcoes_cadastro_doenca = input('Cadastrar (1), Remover (2), Alterar (3), Consultar (4): ')
 
     if opcoes_cadastro_doenca == '1':
       funcionalidade_2.cadastrar_doenca()
-
-
-
-
-
-
+  
+  
 
 print(informacoes_pacientes)
 print(informacoes_doencas)
