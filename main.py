@@ -7,6 +7,7 @@ informacoes_pacientes = []
 informacoes_doencas = []
 
 informacoes_registros = []
+informacoes_datas_atendimentos = []
 
 informacoes_relatorios = []
 
@@ -82,12 +83,15 @@ class CadastroPaciente():
     pedaco_consulta = ''
     consulta_em_lista = []
 
+    cadastrado = False
+
     consulta = input('Digite o cpf, nome ou parte do nome do paciente que deseja consultar informações: ')
 
     for i in informacoes_pacientes:
 
       if i[1] == consulta or i[0] == consulta:
         print(i)
+        cadastrado = True
         nome_exato = True
         
       
@@ -139,11 +143,12 @@ class CadastroPaciente():
 
             if len(consulta_em_lista) == igual:
               print(o)
+              cadastrado = True
               break
         nome_em_lista = []
 
-    else:
-      print('/nEste paciente ainda não foi cadastrado, cadastre-o: ')
+    if cadastrado == False:
+      print('\nEste paciente ainda não foi cadastrado, cadastre-o: ')
       funcionalidade_1.cadastrar_paciente()
 
 
@@ -277,16 +282,52 @@ class CadastroDoenca():
     
 
 
+# Classe para registro de atendimento
+
+class RegistroAtendimento():
+  def __init__(self):
+
+    pass
+
+  # função registrar o atendimento de um novo paciente
+
+  def novo_atendimento(self):
+
+    registro_paciente = []
+
+    registro_paciente.append(input('Peso do paciente: '))
+    registro_paciente.append(input('Altura do paciente: '))
+    registro_paciente.append(input('Relato do paciente: '))
+    registro_paciente.append(input('Anotações do médico: '))
+    registro_paciente.append(input('Relação de exames passados: '))
+    registro_paciente.append(input('Diagnostico médico: '))
+    registro_paciente.append(input('Código CID do diagnostico: '))
+    registro_paciente.append(input('Tratamento e/ou medicamentos prescistros: '))
+
+    registro_paciente.append(informacoes_pacientes[-1][1])
+
+    informacoes_registros.append(registro_paciente)
+
+
+    # função consultar o registro de atendimentos do paciente consultado
+
+  def previamente_atendido(self): 
+
+    print(informacoes_datas_atendimentos)
+
+    detalhes = input('visualizar detalhes do atendimento (nº do atendimento): ')
+
+
 # criando objetos
 
 funcionalidade_1 = CadastroPaciente()
 funcionalidade_2 = CadastroDoenca()
-
+funcionalidade_3 = RegistroAtendimento()
 
 
 while True:
 
-  funcionalidade = input('\nCadastrar paciente (1), cadastrar código de doença (2), registrar atendimento ao paciente (3), relatório (4), encerrar (s): ')
+  funcionalidade = input('\nCadastrar paciente (1), cadastrar código de doença (2), relatório (3), encerrar (s): ')
 
   # menu de cadastramento do paciente
 
@@ -297,6 +338,11 @@ while True:
     if opcoes_cadastro_paciente == '1':
       funcionalidade_1.cadastrar_paciente()
 
+      registro = input('registrar atendimento (s): ')
+
+      if registro == 's':
+        funcionalidade_3.novo_atendimento()
+
     elif opcoes_cadastro_paciente == '2':
       funcionalidade_1.remover_cadastro()
       
@@ -305,6 +351,11 @@ while True:
 
     else:
       funcionalidade_1.consultar_cadastro()
+    
+      registro = input('Consultar atendimentos (s): ')
+
+      if registro == 's':
+        funcionalidade_3.previamente_atendido()
 
 
   # menu de cadastramento de doença
@@ -327,6 +378,11 @@ while True:
   
   if funcionalidade == 's':
     break
+
+
+
+
+
 
 
 
