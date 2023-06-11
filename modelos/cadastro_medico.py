@@ -1,4 +1,3 @@
-from model.paciente import Paciente
 
 
 class CadastroMedico:
@@ -6,7 +5,7 @@ class CadastroMedico:
         pass
 
     # Metodo para cadastrar paciente
-    def cadastrar(self, ):
+    def cadastrar(self, usuario, senha):
         pass
 
     def login(self, nome, senha):

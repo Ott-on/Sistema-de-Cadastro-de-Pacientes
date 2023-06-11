@@ -1,19 +1,30 @@
+import pandas as pd
+
+from modelos.paciente import Paciente
+
 
 class CadastroPacientes:
     def __init__(self):
         pass
 
     # Metodo para cadastrar paciente
-    def cadastrar(self, nome, cpf, email, telefone, celular, data_nascimento, sexo, estado_civil ):
-        self.nome = nome
-        self.cpf = cpf
-        self.email = email
-        self.telefone = telefone
-        self.celular = celular
-        self.data_nascimento = data_nascimento
-        self.sexo = sexo
-        self.estado_civil = estado_civil
-        print('LSLSLSLLS')
+    def cadastrar(self, paciente: Paciente):
+        d = {
+            "nome": [paciente.nome],
+            "cpf": [paciente.cpf],
+            "email": [paciente.email], 
+            "telefone": [paciente.telefone], 
+            "celular": [paciente.celular], 
+            "data_nascimento": [paciente.data_nascimento], 
+            "sexo": [paciente.sexo], 
+            "estado_civil": [paciente.estado_civil],
+        }
+
+        df = pd.DataFrame(d)
+        df.to_csv("dados/teste.csv", index=False, sep=',', mode='a')
+
+        lido = pd.read_csv("teste.csv")
+        print(lido)
 
     def remover(self):
         pass
