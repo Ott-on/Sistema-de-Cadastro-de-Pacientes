@@ -15,6 +15,11 @@ class LoginMedico(tk.Frame):
             self, width=45, height=30, background='white', relief=RIDGE)
         label_fundobranco.place(x=638, y=50)
 
+        label_escrita = Label(
+            self, width=20, height=1, text='Ainda não tem sua conta?',background='white',font=(
+            "Arial", 10))
+        label_escrita.place(x=685, y=400)
+
         # LOGIN:
         label_LOGIN = Label(self, width=10, height=2, text='LOGIN', font=(
             "Arial", 25), bg='white', fg='#02bae8')
@@ -42,11 +47,13 @@ class LoginMedico(tk.Frame):
 
         # botões:
         botao_login = Button(self, text='Entrar', width=23, command=self.fazer_login, height=2, font=(
-            "Arial", 15), bg='#02bae8', relief=RAISED, overrelief=RAISED)
+            "Arial", 15), bg='#02bae8',fg='white', relief=RAISED, overrelief=RAISED)
         botao_login.place(x=670, y=330)
-        botao_cadastro = Button(self, text='Cadastrar', width=23, command=self.fazer_cadastro, height=2, font=(
-            "Arial", 15), bg='#eeeeee', relief=RAISED, overrelief=RAISED)
-        botao_cadastro.place(x=670, y=400)
+        
+        botao_cadastro = Button(self, text='Cadastra-se', width=10, command=self.fazer_cadastro, height=1, font=(
+            "Arial", 10,"underline"), bg='white',fg='#02bae8', relief='solid', overrelief='solid',borderwidth=0, highlightthickness=0)
+        botao_cadastro.place(x=845, y=400)
+        
 
     def fazer_login(self):
         usuario = self.entrada_usuario.get()

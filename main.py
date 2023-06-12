@@ -10,6 +10,7 @@ import tkinter as tk
 from tkinter import PhotoImage, ttk
 
 from telas.login_medico import LoginMedico
+from telas.cadastro_medico import CadastroMedico
 
 
 LARGEFONT = ("Verdana", 35)
@@ -18,7 +19,7 @@ LARGEFONT = ("Verdana", 35)
 class tkinterApp(tk.Tk):
 
     def __init__(self, *args, **kwargs):
-
+        
         tk.Tk.__init__(self, *args, **kwargs)
         self.geometry('1000x600')  # tamanho da tela
         self.title("Sistema de Cadastro de Pacientes")  # nome da interface
@@ -34,7 +35,7 @@ class tkinterApp(tk.Tk):
 
         self.frames = {}
 
-        for F in (StartPage, Page1, Page2, LoginMedico):
+        for F in (StartPage, Page1, Page2, LoginMedico, CadastroMedico):
             frame = F(container, self)
             self.frames[F] = frame
             frame.grid(row=0, column=0, sticky="nsew")
@@ -61,7 +62,7 @@ class StartPage(tk.Frame):
         button1.grid(row=1, column=1, padx=10, pady=10)
 
         button2 = ttk.Button(self, text="Page 2",
-                             command=lambda: controller.show_frame(Page2))
+                             command=lambda: controller.show_frame(CadastroMedico))
 
         button2.grid(row=2, column=1, padx=10, pady=10)
 
