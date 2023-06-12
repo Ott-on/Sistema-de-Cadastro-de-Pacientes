@@ -1,3 +1,4 @@
-modelos/__pycache__
-telas/__pycache__
-__pycache__
+.vscode/
+modelos/__pycache__/**
+telas/__pycache__/**
+__pycache__/**
