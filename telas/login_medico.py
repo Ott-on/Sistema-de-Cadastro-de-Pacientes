@@ -5,10 +5,11 @@ from tkinter import RAISED, RIDGE, Button, Entry, Label, PhotoImage, messagebox
 class LoginMedico(tk.Frame):
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
-
+        self.configure(bg='#242323')
         img = PhotoImage(file='imagens/tela_abertura.png')
         label_image = Label(self, image=img)
-        label_image.place(x=-60, y=-5)
+        label_image.image = img 
+        label_image.place(x=-60, y=-2)
 
         label_fundobranco = Label(
             self, width=45, height=30, background='white', relief=RIDGE)
