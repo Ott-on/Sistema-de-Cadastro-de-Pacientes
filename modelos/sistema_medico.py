@@ -1,6 +1,6 @@
 
 
-class CadastroMedico:
+class SistemaMedico:
     def __init__(self):
         pass
 

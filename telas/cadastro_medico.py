@@ -72,7 +72,7 @@ from tkinter import RAISED, RIDGE, Button, Entry, Label, PhotoImage, messagebox
 class CadastroMedico(tk.Frame):
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
-        self.configure(bg='#02bae8')
+        self.configure(bg='#242323')
 
         # Usuário:
         label_usuario = Label(self, width=10, height=2, text='', font=(

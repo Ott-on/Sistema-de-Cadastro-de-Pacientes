@@ -1,6 +1,7 @@
 import tkinter as tk
 from tkinter import RAISED, RIDGE, Button, Entry, Label, PhotoImage, messagebox
-
+from telas.cadastro_medico import CadastroMedico
+from telas.menu_opcoes import MenuOpcoes
 
 class LoginMedico(tk.Frame):
     def __init__(self, parent, controller):
@@ -46,16 +47,16 @@ class LoginMedico(tk.Frame):
         self.entrada_senha = entrada_senha
 
         # botões:
-        botao_login = Button(self, text='Entrar', width=23, command=self.fazer_login, height=2, font=(
+        botao_login = Button(self, text='Entrar', width=23, command=lambda: self.fazer_login(controller), height=2, font=(
             "Arial", 15), bg='#02bae8',fg='white', relief=RAISED, overrelief=RAISED)
         botao_login.place(x=670, y=330)
         
-        botao_cadastro = Button(self, text='Cadastra-se', width=10, command=self.fazer_cadastro, height=1, font=(
+        botao_cadastro = Button(self, text='Cadastra-se', width=10, command=lambda: self.fazer_cadastro(controller), height=1, font=(
             "Arial", 10,"underline"), bg='white',fg='#02bae8', relief='solid', overrelief='solid',borderwidth=0, highlightthickness=0)
         botao_cadastro.place(x=845, y=400)
         
 
-    def fazer_login(self):
+    def fazer_login(self,controller):
         usuario = self.entrada_usuario.get()
         senha = self.entrada_senha.get()
 
@@ -64,13 +65,15 @@ class LoginMedico(tk.Frame):
             # Se ocorrer tudo bem iremos fazer o login
             print(f"usuário:", usuario)
             print(f"senha:", senha)
+            controller.show_frame(MenuOpcoes)
         else:
             # Aqui exibimos um popup de aviso pedindo para os campos serem preenchidos
             messagebox.showinfo(
                 "Aviso!", "Preencha os campos para continuar", icon="warning")
 
-    def fazer_cadastro(self):
+    def fazer_cadastro(self, controller):
         # Função para realizar o cadastro
+        controller.show_frame(CadastroMedico)
         print("Cadastro realizado!")
 
 

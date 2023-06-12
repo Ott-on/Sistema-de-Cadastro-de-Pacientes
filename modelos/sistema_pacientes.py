@@ -3,7 +3,7 @@ import pandas as pd
 from modelos.paciente import Paciente
 
 
-class CadastroPacientes:
+class SistemaPacientes:
     def __init__(self):
         pass
 

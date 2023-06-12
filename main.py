@@ -1,4 +1,4 @@
-from modelos.cadastro_pacientes import CadastroPacientes
+from modelos.sistema_pacientes import SistemaPacientes
 from modelos.paciente import Paciente
 
 # paciente = Paciente('Otton', '12345678910', 'otton@gmail.com', '123465678', '12345678', f'20/03/2003', 'M', 'solteiro')
@@ -11,6 +11,7 @@ from tkinter import PhotoImage, ttk
 
 from telas.login_medico import LoginMedico
 from telas.cadastro_medico import CadastroMedico
+from telas.menu_opcoes import MenuOpcoes
 
 
 LARGEFONT = ("Verdana", 35)
@@ -35,12 +36,12 @@ class tkinterApp(tk.Tk):
 
         self.frames = {}
 
-        for F in (StartPage, Page1, Page2, LoginMedico, CadastroMedico):
+        for F in (StartPage, Page1, Page2, LoginMedico, CadastroMedico, MenuOpcoes):
             frame = F(container, self)
             self.frames[F] = frame
             frame.grid(row=0, column=0, sticky="nsew")
 
-        self.show_frame(StartPage)
+        self.show_frame(LoginMedico)
 
     def show_frame(self, cont):
         frame = self.frames[cont]
