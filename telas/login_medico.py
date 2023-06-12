@@ -61,6 +61,10 @@ class LoginMedico(tk.Frame):
             messagebox.showinfo(
                 "Aviso!", "Preencha os campos para continuar", icon="warning")
 
+    def fazer_cadastro(self):
+        # Função para realizar o cadastro
+        print("Cadastro realizado!")
+
 
 # app = tk.Tk()
 # app.title("Sistema de Cadastro de Pacientes")
