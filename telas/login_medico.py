@@ -27,7 +27,7 @@ class LoginMedico(tk.Frame):
             "Arial", 25), bg='#636262', highlightthickness=0.5, relief='solid')
         entrada_usuario.place(x=670, y=190)
 
-        self.entrada_usuario = entrada_usuario.get()
+        self.entrada_usuario = entrada_usuario
 
         # Senha:
         label_senha = Label(self, width=10, height=2, text='Senha:', font=(
@@ -37,26 +37,24 @@ class LoginMedico(tk.Frame):
             "Arial", 25), show="*", bg='#636262', highlightthickness=0.5, relief='solid')
         entrada_senha.place(x=670, y=270)
 
-        self.entrada_senha = entrada_senha.get()
+        self.entrada_senha = entrada_senha
 
         # botões:
         botao_login = Button(self, text='Entrar', width=23, command=self.fazer_login, height=2, font=(
             "Arial", 15), bg='#02bae8', relief=RAISED, overrelief=RAISED)
         botao_login.place(x=670, y=330)
-        botao_cadastro = Button(self, text='Cadastrar', width=23, command=self.fazer_login, height=2, font=(
+        botao_cadastro = Button(self, text='Cadastrar', width=23, command=self.fazer_cadastro, height=2, font=(
             "Arial", 15), bg='#eeeeee', relief=RAISED, overrelief=RAISED)
         botao_cadastro.place(x=670, y=400)
 
     def fazer_login(self):
-        usuario = self.entrada_senha
-        senha = self.entrada_senha
-
-        print(self.entrada_senha)
+        usuario = self.entrada_usuario.get()
+        senha = self.entrada_senha.get()
 
         # Aqui verificamos se os campos foram preenchidos caso não deve mostrar um erro pedindo para preencher os campos
         if len(usuario) != 0:
-            # Se ocorrer tudo bem iremos dazer o login
-            print(f"usuário:", self.entrada_senha)
+            # Se ocorrer tudo bem iremos fazer o login
+            print(f"usuário:", usuario)
             print(f"senha:", senha)
         else:
             # Aqui exibimos um popup de aviso pedindo para os campos serem preenchidos
@@ -64,15 +62,15 @@ class LoginMedico(tk.Frame):
                 "Aviso!", "Preencha os campos para continuar", icon="warning")
 
 
-# janela = Tk() #instância da janela
-# janela.title("Sistema de Cadastro de Pacientes") #nome da interface
-# janela.geometry('1000x600') #tamanho da tela
-# janela.config(bg='#242323') #cor do fundo
-# janela.iconphoto(False, PhotoImage(file='imagens/icon.png')) #icone
-# janela.resizable(width=False, height=False) #não deixar que o usúario amplie a tela
+# app = tk.Tk()
+# app.title("Sistema de Cadastro de Pacientes")
+# app.geometry('1000x600')
+# app.config(bg='#242323')
+# app.iconphoto(False, PhotoImage(file='imagens/icon.png'))
+# app.resizable(width=False, height=False)
 
-# # entrada_usuario.delete(0,END)
-# # entrada_senha.delete(0,END)
+# login_medico = LoginMedico(app, app)
+# login_medico.pack()
 
+# app.mainloop()
 
-# janela.mainloop()
