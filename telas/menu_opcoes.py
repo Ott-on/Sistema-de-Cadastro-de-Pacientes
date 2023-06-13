@@ -6,14 +6,29 @@ class MenuOpcoes(tk.Frame):
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
         self.configure(bg='#242323')
+        imagem = tk.PhotoImage(file="imagens/voltar_label.png")
 
         label_retangulo = Label(self, width=1000, height=5, bg='#02bae8')
         label_retangulo.place(x=0, y=0)
 
         #botão voltar
-        botao_voltar = Button(self, text='Voltar', width=10, height=1, font=(
-            "Arial", 30), bg='#02bae8',fg='white', relief='solid', overrelief='solid',borderwidth=0, highlightthickness=0)
-        botao_voltar.place(x=5, y=5)
+        img = PhotoImage(file='imagens/voltar_label.png')
+        button_image = Button(self, image=img, bg='#02bae8', fg='#02bae8', relief='solid', overrelief='solid',borderwidth=0, highlightthickness=0)
+        button_image.image = img
+        button_image.place(x=10, y=20)
+           
         
+            
+    def paciente(self):
+
+        pass
+
+    def doença(self):
+
+        pass
+    
+    def relatório(self):
+        
+        pass
 
 

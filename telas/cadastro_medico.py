@@ -72,41 +72,68 @@ from tkinter import RAISED, RIDGE, Button, Entry, Label, PhotoImage, messagebox
 class CadastroMedico(tk.Frame):
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
-        self.configure(bg='#242323')
+        self.configure(bg='white')
 
-        # Usuário:
-        label_usuario = Label(self, width=10, height=2, text='', font=(
-            "Arial", 10), bg='white', fg='#888a89')
-        label_usuario.place(x=650, y=50)
-        entrada_usuario = Entry(self, width=14, font=(
-            "Arial", 25), bg='#636262', highlightthickness=0.5, relief='solid')
-        entrada_usuario.place(x=670, y=190)
+        #escritos e imagens:
+        img2 = PhotoImage(file='imagens/tela_cadastro_medico.png')
+        label_image = Label(self, image=img2, relief='solid',borderwidth=0,highlightthickness=0)
+        label_image.image = img2 
+        label_image.place(x=0, y=90)
 
-        self.entrada_usuario = entrada_usuario
+        label_retangulo = Label(self, width=1000, height=5, bg='#02bae8')
+        label_retangulo.place(x=0, y=0) 
 
-        # Senha:
+        label_retangulocinza = Label(
+            self, width=45, height=30, background='#242323', relief=RAISED)
+        label_retangulocinza.place(x=638, y=110)
+
+        label_cadastrar =Label(self, width=15, height=2, text='CADASTRE-SE', font=(
+            "Arial", 25), bg='#242323', fg='#02bae8')
+        label_cadastrar.place(x=650, y=130) 
+
+        label_usuario = Label(self, width=10, height=2, text='Usuário:', font=(
+            "Arial", 10), bg='#242323', fg='#888a89')
+        label_usuario.place(x=640, y=310) 
+        
+        label_crm = Label(self, width=10, height=2, text='CRM:', font=(
+            "Arial", 10), bg='#242323', fg='#888a89')
+        label_crm.place(x=640, y=210)
+
         label_senha = Label(self, width=10, height=2, text='Senha:', font=(
-            "Arial", 10), bg='white', fg='#888a89')
-        label_senha.place(x=650, y=240)
-        entrada_senha = Entry(self, width=14, font=(
-            "Arial", 25), show="*", bg='#636262', highlightthickness=0.5, relief='solid')
-        entrada_senha.place(x=670, y=270)
+            "Arial", 10), bg='#242323', fg='#888a89')
+        label_senha.place(x=640, y=410)
 
-        self.entrada_senha = entrada_senha
+        #botão voltar
+        img = PhotoImage(file='imagens/voltar_label.png')
+        button_image = Button(self, image=img, bg='#02bae8', fg='#02bae8', command=lambda: self.voltar_login(controller), relief='solid', overrelief='solid',borderwidth=0, highlightthickness=0)
+        button_image.image = img
+        button_image.place(x=10, y=20)  
 
-    def fazer_login(self):
-        usuario = self.entrada_usuario.get()
-        senha = self.entrada_senha.get()
+        #Entradas:
+        entrada_usuario2 = Entry(self,width=14, font=(
+            "Arial", 25), bg='#636262', highlightthickness=0.5, relief='solid')
+        entrada_usuario2.place(x=660, y=350)
 
-        # Aqui verificamos se os campos foram preenchidos caso não deve mostrar um erro pedindo para preencher os campos
-        if len(usuario) != 0:
-            # Se ocorrer tudo bem iremos fazer o login
-            print(f"usuário:", usuario)
-            print(f"senha:", senha)
-        else:
-            # Aqui exibimos um popup de aviso pedindo para os campos serem preenchidos
-            messagebox.showinfo(
-                "Aviso!", "Preencha os campos para continuar", icon="warning")
+        self.entrada_usuario2 = entrada_usuario2
+        
+        entrada_crm2 = Entry(self,width=14, font=(
+            "Arial", 25), bg='#636262', highlightthickness=0.5, relief='solid')
+        entrada_crm2.place(x=660, y=250)
+
+        self.entrada_crm2 = entrada_crm2
+
+        entrada_senha2 = Entry(self,width=14, font=(
+            "Arial", 25), bg='#636262', highlightthickness=0.5, relief='solid')
+        entrada_senha2.place(x=660, y=450)
+
+        self.entrada_senha2 = entrada_senha2
+
+    def voltar_login(self, controller):
+        usuario = self.entrada_usuario2.get()
+        crm = self.entrada_crm2.get()
+        senha = self.entrada_senha2.get()
+
+        controller.show_frame(LoginMedico)
 
 
 

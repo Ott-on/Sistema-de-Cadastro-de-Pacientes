@@ -18,7 +18,7 @@ class LoginMedico(tk.Frame):
         label_image.place(x=-60, y=-2)
 
         label_fundobranco = Label(
-            self, width=45, height=30, background='white', relief=RIDGE)
+            self, width=45, height=30, background='white', relief=RAISED)
         label_fundobranco.place(x=638, y=50)
 
         label_escrita = Label(
