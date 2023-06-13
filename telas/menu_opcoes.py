@@ -18,17 +18,5 @@ class MenuOpcoes(tk.Frame):
         button_image.place(x=10, y=20)
            
         
-            
-    def paciente(self):
-
-        pass
-
-    def doença(self):
-
-        pass
-    
-    def relatório(self):
-        
-        pass
 
 
