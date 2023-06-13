@@ -1,15 +1,24 @@
 import pandas as pd
+import os.path
+
+from paciente import *
 
 from modelos.paciente import Paciente
 
 
 class SistemaPacientes:
     def __init__(self):
-        pass
+        self.arquivo_csv = "dados/pacientes/otton.csv"
+
+        # Verificar se o arquivo existe
+        if not os.path.isfile(self.arquivo_csv):
+            # Criar o arquivo e adicionar os cabeçalhos das colunas
+            df_cabecalho = pd.DataFrame(columns=["Nome", "CPF", "Email", "Telefone", "Celular", "Data de Nascimento", "Sexo", "Estado Civil"])
+            df_cabecalho.to_csv(self.arquivo_csv, index=False, sep=';')
 
     # Metodo para cadastrar paciente
     def cadastrar(self, paciente: Paciente):
-        d = {
+        dados = {
             "nome": [paciente.nome],
             "cpf": [paciente.cpf],
             "email": [paciente.email], 
@@ -20,10 +29,10 @@ class SistemaPacientes:
             "estado_civil": [paciente.estado_civil],
         }
 
-        df = pd.DataFrame(d)
-        df.to_csv("dados/teste.csv", index=False, sep=',', mode='a')
+        df = pd.DataFrame(dados)
+        df.to_csv("dados//pacientes/otton.csv", index=False, sep=',', mode='a')
 
-        lido = pd.read_csv("teste.csv")
+        lido = pd.read_csv("dados/pacientes/otton.csv")
         print(lido)
 
     def remover(self):
