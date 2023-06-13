@@ -1,7 +1,7 @@
 import pandas as pd
 import os.path
 
-from paciente import *
+rom paciente import *f
 
 from modelos.paciente import Paciente
 

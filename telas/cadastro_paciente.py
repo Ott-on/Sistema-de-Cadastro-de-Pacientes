@@ -1,5 +1,6 @@
 import tkinter as tk
 from tkinter import RAISED, RIDGE, Button, Entry, Label, PhotoImage, messagebox
+from paciente import *
 
 
 class CadastroPaciente(tk.Frame):
@@ -37,6 +38,7 @@ class CadastroPaciente(tk.Frame):
         # Aqui verificamos se os campos foram preenchidos caso não deve mostrar um erro pedindo para preencher os campos
         if cpf.isdigit() and len(cpf) == 11 and telefone.isalpha() and celular.isalpha() and len(nascimento) != 0 and sexo.isalpha() and civil.isalpha():
             print('ok')
+            Paciente(nome, cpf, email, telefone, celular, data_nascimento, sexo, estado_civil)
 
         else:
             # Aqui exibimos um popup de aviso pedindo para os campos serem preenchidos
