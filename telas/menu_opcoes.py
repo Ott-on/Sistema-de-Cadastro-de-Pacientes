@@ -15,5 +15,17 @@ class MenuOpcoes(tk.Frame):
             "Arial", 30), bg='#02bae8',fg='white', relief='solid', overrelief='solid',borderwidth=0, highlightthickness=0)
         botao_voltar.place(x=5, y=5)
         
+    def paciente(self):
+
+        pass
+
+    def doença(self):
+
+        pass
+    
+    def relatório(self):
+        
+        pass
+    
 
 
