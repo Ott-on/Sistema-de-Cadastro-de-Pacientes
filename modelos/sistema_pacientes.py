@@ -8,7 +8,7 @@ from modelos.paciente import Paciente
 
 class SistemaPacientes:
     def __init__(self):
-        self.arquivo_csv = "dados/pacientes/otton.csv"
+        self.arquivo_csv = "dados/otton.csv"
 
         # Verificar se o arquivo existe
         if not os.path.isfile(self.arquivo_csv):
@@ -30,9 +30,9 @@ class SistemaPacientes:
         }
 
         df = pd.DataFrame(dados)
-        df.to_csv("dados//pacientes/otton.csv", index=False, sep=',', mode='a')
+        df.to_csv("dados/otton.csv", index=False, sep=',', mode='a')
 
-        lido = pd.read_csv("dados/pacientes/otton.csv")
+        lido = pd.read_csv("dados/otton.csv")
         print(lido)
 
     def remover(self):

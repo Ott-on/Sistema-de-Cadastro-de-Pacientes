@@ -8,20 +8,21 @@ class CadastroPaciente(tk.Frame):
         self.configure(bg='#242323')
 
         # Nome
-
+        self.entrada_nome = entrada_nome
         # CPF
-
+        self.entrada_cpf = entrada_cpf
         # Email
-
+        self.entrada_email = entrada_email
         # Celular
-
+        self.entrada_celular = entrada_celular
         # Telefone
-
+        self.entrada_telefone = entrada_telefone
         # Data de Nascimento
-
+    
         # Sexo
-
+        self.entrada_sexo = entrada_sexo
         # Estado Civil
+        self.entrada_civil = entrada_civil
 
     def fazer_login(self):
         nome = self.entrada_nome.get()
