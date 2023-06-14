@@ -8,7 +8,7 @@ from modelos.paciente import Paciente
 
 class SistemaPacientes:
     def __init__(self):
-        self.arquivo_csv = "dados/otton.csv"
+        self.arquivo_csv = "dados/pacientes.csv"
 
         # Verificar se o arquivo existe
         if not os.path.isfile(self.arquivo_csv):
@@ -30,16 +30,50 @@ class SistemaPacientes:
         }
 
         df = pd.DataFrame(dados)
-        df.to_csv("dados/otton.csv", index=False, sep=',', mode='a')
+        df.to_csv("dados/pacientes.csv", index=False, sep=',', mode='a')
 
-        lido = pd.read_csv("dados/otton.csv")
+        lido = pd.read_csv("dados/pacientes.csv")
         print(lido)
 
-    def remover(self):
-        pass
 
-    def alterar_cadastro(self):
-        pass
+    def remover(self, paciente_selecionado:
 
-    def consultar_paciente(self, valor_buscar):
-        pass
+        # lê o arquivo csv dos pacientes
+        tabela_pacientes = pd.read_csv("dados/pacientes.csv")
+
+        # procura a linha do paciente no arquivo
+        paciente_procurado = tabela_pacientes.loc[tabela_pacientes['Nome'] == paciente_selecionado | tabela_pacientes['CPF'] == paciente_selecionado]
+
+        # retira a linha do arquivo
+        tabela_pacientes = df.drop(paciente_procurado.index)
+
+        # substitui a o arquivo antigo pelo arquivo sem o paciente
+        tabela_pacientes.to_csv('pacientes.csv', index=False, sep=';')
+
+
+    def alterar_cadastro(self, paciente_selecionado, dado_para_remover, novo_dado):
+
+        # lê o arquivo csv dos pacientes
+        tabela_pacientes = pd.read_csv("dados/pacientes.csv")
+
+        # procura a linha do paciente no arquivo
+        paciente_procurado = tabela_pacientes.loc[tabela_pacientes['Nome'] == paciente_selecionado | tabela_pacientes['CPF'] == paciente_selecionado]
+
+        # altera o dado especifico da linha
+        paciente_procurado.loc[paciente_procurado.index, dado_para_remover] = novo_dado
+
+        # coloca o novo dado no arquivo principal de pacientes
+        tabela_pacientes.loc[linha_procurada.index] = linha_procurada
+
+        # substitui a o arquivo antigo pelo arquivo alterado
+        tabela_paciente.to_csv('pacientes.csv', index=False)
+
+
+    def consultar_paciente(self, paciente_selecionado):
+        # lê o arquivo csv dos pacientes
+        tabela_pacientes = pd.read_csv("dados/pacientes.csv")
+
+        # procura a linha do paciente no arquivo
+        paciente_procurado = tabela_pacientes.loc[tabela_pacientes['Nome'] == paciente_selecionado | tabela_pacientes['CPF'] == paciente_selecionado]
+
+        print(paciente_procurado)
