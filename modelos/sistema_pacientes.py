@@ -36,7 +36,7 @@ class SistemaPacientes:
         print(lido)
 
 
-    def remover(self, paciente_selecionado:
+    def remover(self, paciente_selecionado):
 
         # lê o arquivo csv dos pacientes
         tabela_pacientes = pd.read_csv("dados/pacientes.csv")
@@ -47,11 +47,11 @@ class SistemaPacientes:
         # retira a linha do arquivo
         tabela_pacientes = df.drop(paciente_procurado.index)
 
-        # substitui a o arquivo antigo pelo arquivo sem o paciente
-        tabela_pacientes.to_csv('pacientes.csv', index=False, sep=';')
+        # substitui o arquivo antigo pelo arquivo sem o paciente
+        tabela_pacientes.to_csv('dados/pacientes.csv', index=False, sep=';')
 
 
-    def alterar_cadastro(self, paciente_selecionado, dado_para_remover, novo_dado):
+    def alterar_cadastro(self, paciente_selecionado, dado_para_alterar, novo_dado):
 
         # lê o arquivo csv dos pacientes
         tabela_pacientes = pd.read_csv("dados/pacientes.csv")
@@ -60,13 +60,13 @@ class SistemaPacientes:
         paciente_procurado = tabela_pacientes.loc[tabela_pacientes['Nome'] == paciente_selecionado | tabela_pacientes['CPF'] == paciente_selecionado]
 
         # altera o dado especifico da linha
-        paciente_procurado.loc[paciente_procurado.index, dado_para_remover] = novo_dado
+        paciente_procurado.loc[paciente_procurado.index, dado_para_alterar] = novo_dado
 
         # coloca o novo dado no arquivo principal de pacientes
-        tabela_pacientes.loc[linha_procurada.index] = linha_procurada
+        tabela_pacientes.loc[paciente_procurado.index] = paciente_procurado
 
         # substitui a o arquivo antigo pelo arquivo alterado
-        tabela_paciente.to_csv('pacientes.csv', index=False)
+        tabela_pacientes.to_csv('dados/pacientes.csv', index=False, sep=';')
 
 
     def consultar_paciente(self, paciente_selecionado):
