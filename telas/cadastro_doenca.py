@@ -1,6 +1,6 @@
 import tkinter as tk
 from tkinter import RAISED, RIDGE, Button, Entry, Label, PhotoImage, messagebox
-from sistema_doencas import *
+from modelos.sistema_doencas import *
 
 
 class CadastroDoenca(tk.Frame):
@@ -9,9 +9,17 @@ class CadastroDoenca(tk.Frame):
         self.configure(bg='#242323')
 
         # Nome
-        self.entrada_nome = entrada_nome
+        entrada_nome = Entry(self,width=14, font=(
+            "Arial", 25), bg='#636262', highlightthickness=0.5, relief='solid')
+        entrada_nome.place(x=660, y=350)
+
+        self.entrada_nome = entrada_nome 
         # CID
-        self.entrada_cpf = entrada_cpf
+        entrada_cid = Entry(self,width=14, font=(
+            "Arial", 25), bg='#636262', highlightthickness=0.5, relief='solid')
+        entrada_cid.place(x=660, y=350)
+
+        self.entrada_cid = entrada_cid
         # Email
         
 

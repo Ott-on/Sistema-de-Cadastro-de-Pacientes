@@ -2,7 +2,7 @@ import pandas as pd
 import os.path
 
 
-class SistemaDoenca(self, nome, cid):
+class SistemaDoenca:
     def __init__(self):
         self.arquivo_csv = "dados/doencas.csv"
 
@@ -16,7 +16,7 @@ class SistemaDoenca(self, nome, cid):
     def cadastrar_doenca(self, nome, cid):
         dados = {
             "nome": [nome],
-            "cpf": [cid],        
+            "cid": [cid],        
         }
 
         df = pd.DataFrame(dados)

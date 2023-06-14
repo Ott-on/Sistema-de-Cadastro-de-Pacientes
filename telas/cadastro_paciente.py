@@ -1,6 +1,6 @@
 import tkinter as tk
 from tkinter import RAISED, RIDGE, Button, Entry, Label, PhotoImage, messagebox
-from paciente import *
+from modelos.paciente import *
 
 
 class CadastroPaciente(tk.Frame):
@@ -44,7 +44,7 @@ class CadastroPaciente(tk.Frame):
         self.entrada_telefone = entrada_telefone
 
         # Data de Nascimento
-    
+        
         # Sexo
         entrada_sexo = Entry(self,width=14, font=(
             "Arial", 25), bg='#636262', highlightthickness=0.5, relief='solid')
@@ -59,7 +59,7 @@ class CadastroPaciente(tk.Frame):
 
         self.entrada_civil = entrada_civil
 
-    def fazer_login(self):
+    def fazer_cadastro(self):
         nome = self.entrada_nome.get()
         cpf = self.entrada_cpf.get()
         email = self.entrada_email.get()
@@ -72,7 +72,7 @@ class CadastroPaciente(tk.Frame):
         # Aqui verificamos se os campos foram preenchidos caso não deve mostrar um erro pedindo para preencher os campos
         if cpf.isdigit() and len(cpf) == 11 and telefone.isalpha() and celular.isalpha() and len(nascimento) != 0 and sexo.isalpha() and civil.isalpha():
             print('ok')
-            Paciente(nome, cpf, email, telefone, celular, data_nascimento, sexo, estado_civil)
+            Paciente(nome, cpf, email, telefone, celular, nascimento, sexo, civil)
 
         else:
             # Aqui exibimos um popup de aviso pedindo para os campos serem preenchidos
