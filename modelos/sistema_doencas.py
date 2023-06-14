@@ -13,10 +13,10 @@ class SistemaDoenca:
             df_cabecalho.to_csv(self.arquivo_csv, index=False, sep=';')
 
     # Metodo para cadastrar doença
-    def cadastrar_doenca(self, nome, cid):
+    def cadastrar(self, nome, cid):
         dados = {
             "nome": [nome],
-            "cid": [cid],        
+            "cid": [cid],
         }
 
         df = pd.DataFrame(dados)
@@ -25,13 +25,13 @@ class SistemaDoenca:
         lido = pd.read_csv("dados/doencas.csv")
         print(lido)
 
-    def remover_doenca(self, doenca_selecionada):
+    def remover(self, doenca_selecionada):
 
         # lê o arquivo csv das doenças
         tabela_doencas = pd.read_csv("dados/doencas.csv")
 
         # procura a linha da doença no arquivo
-        doença_procurada = tabela_doenças.loc[tabela_doenças['Nome'] == doenca_selecionada | tabela_doenças['CID'] == doenca_selecionada]
+        doença_procurada = tabela_doenças .loc[tabela_doenças ['Nome'] == doenca_selecionada | tabela_doenças ['CID'] == doenca_selecionada]
 
         # retira a linha do arquivo
         tabela_doencas = df.drop(doenca_procurada.index)
@@ -39,17 +39,18 @@ class SistemaDoenca:
         # substitui o arquivo antigo pelo arquivo sem a doença
         tabela_doencas.to_csv('dados/doencas.csv', index=False, sep=';')
 
-
-    def alterar_cadastro_doenca(self, doenca_selecionada, dado_para_alterar, novo_dado):
+    def alterar(self, doenca_selecionada, dado_para_alterar, novo_dado):
 
         # lê o arquivo csv das doencas
         tabela_doencas = pd.read_csv("dados/doencas.csv")
 
         # procura a linha da doença no arquivo
-        doenca_procurada = tabela_doencas.loc[tabela_doencas['Nome'] == doenca_selecionada | tabela_doencas['CID'] == doenca_selecionada]
+        doenca_procurada = tabela_doencas.loc[tabela_doencas['Nome'] ==
+                                              doenca_selecionada | tabela_doencas['CID'] == doenca_selecionada]
 
         # altera o dado especifico da linha
-        doenca_procurada.loc[doenca_procurada.index, dado_para_alterar] = novo_dado
+        doenca_procurada.loc[doenca_procurada.index,
+                             dado_para_alterar] = novo_dado
 
         # coloca o novo dado no arquivo principal de doenças
         tabela_doencas.loc[doenca_procurada.index] = doenca_procurada
@@ -57,12 +58,12 @@ class SistemaDoenca:
         # substitui a o arquivo antigo pelo arquivo alterado
         tabela_doencas.to_csv('dados/doencas.csv', index=False, sep=';')
 
-
-    def consultar_doenca(self, doenca_selecionada):
+    def consultar(self, doenca_selecionada):
         # lê o arquivo csv das doenças
         tabela_doencas = pd.read_csv("dados/doencas.csv")
 
         # procura a linha do paciente no arquivo
-        doenca_procurada = tabela_doencas.loc[tabela_doencas['Nome'] == doenca_selecionada | tabela_pacientes['CPF'] == doenca_selecionada]
+        doenca_procurada = tabela_doencas.loc[tabela_doencas['Nome'] ==
+                                              doenca_selecionada | tabela_pacientes['CPF'] == doenca_selecionada]
 
         print(doenca_procurada)

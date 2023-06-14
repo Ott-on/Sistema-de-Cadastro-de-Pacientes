@@ -67,9 +67,8 @@ class LoginMedico(tk.Frame):
         # Aqui verificamos se os campos foram preenchidos caso não deve mostrar um erro pedindo para preencher os campos
         if len(usuario) != 0:
             # Se ocorrer tudo bem iremos fazer o login
-            print(f"usuário:", usuario)
-            print(f"senha:", senha)
-            # controller.show_frame(MenuOpcoes)
+            # print("médico:", usuario)
+            # print("senha:", senha)
             sistema_medico.login(
                 usuario, senha, transacao_tela=lambda: controller.show_frame(MenuOpcoes))
 
