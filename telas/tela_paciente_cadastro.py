@@ -127,6 +127,9 @@ class cadastrarPacientes(tk.Frame):
         Paciente = Paciente(nome, cpf, email, telefone, celular, nascimento, sexo, civil)
         SistemaPacientes.cadastrar(self, Paciente)
 
+        # voltar ao menu
+        self.voltar_menu(controller)
+
         # Aqui verificamos se os campos foram preenchidos caso não deve mostrar um erro pedindo para preencher os campos
         if cpf.isdigit() and len(cpf) == 11 and telefone.isalpha() and celular.isalpha() and sexo.isalpha() and civil.isalpha():
             print('ok')
