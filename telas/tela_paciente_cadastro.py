@@ -100,6 +100,11 @@ class cadastrarPacientes(tk.Frame):
         button_image.image = img
         button_image.place(x=10, y=10)
 
+        # botão confirmar cadastro
+        button_cadastrar = Button(self, text='Confirmar', font=("Arial", 16), activebackground='#02bae8', bg='#02bae8', fg='white', command=lambda: self.fazer_cadastro(controller), relief='solid', overrelief='solid', width=10, height=2, borderwidth=0, highlightthickness=0)
+        
+        button_cadastrar.place(x=700, y=450)
+
 
     def voltar_menu(self, controller):
         from telas.menu_opcoes import MenuOpcoes

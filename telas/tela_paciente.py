@@ -19,7 +19,7 @@ class Pacientes(tk.Frame):
         button_image.image = img
         button_image.place(x=10, y=10)
     
-        # botão sair
+        # botão cadastrar
         button_cadastrar = Button(self, text='CADASTRAR', font=("Arial", 16), activebackground='#02bae8', bg='#02bae8', fg='white', command=lambda: self.cadastrar_pacientes(controller), relief='solid', overrelief='solid', width=10, height=2, borderwidth=0, highlightthickness=0)
         button_cadastrar.place(x=100, y=2)
 
