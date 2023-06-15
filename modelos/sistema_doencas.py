@@ -45,12 +45,10 @@ class SistemaDoenca:
         tabela_doencas = pd.read_csv("dados/doencas.csv")
 
         # procura a linha da doença no arquivo
-        doenca_procurada = tabela_doencas.loc[tabela_doencas['Nome'] ==
-                                              doenca_selecionada | tabela_doencas['CID'] == doenca_selecionada]
+        doenca_procurada = tabela_doencas.loc[tabela_doencas['Nome'] == doenca_selecionada | tabela_doencas['CID'] == doenca_selecionada]
 
         # altera o dado especifico da linha
-        doenca_procurada.loc[doenca_procurada.index,
-                             dado_para_alterar] = novo_dado
+        doenca_procurada.loc[doenca_procurada.index, dado_para_alterar] = novo_dado
 
         # coloca o novo dado no arquivo principal de doenças
         tabela_doencas.loc[doenca_procurada.index] = doenca_procurada
@@ -63,7 +61,6 @@ class SistemaDoenca:
         tabela_doencas = pd.read_csv("dados/doencas.csv")
 
         # procura a linha do paciente no arquivo
-        doenca_procurada = tabela_doencas.loc[tabela_doencas['Nome'] ==
-                                              doenca_selecionada | tabela_pacientes['CPF'] == doenca_selecionada]
+        doenca_procurada = tabela_doencas.loc[tabela_doencas['Nome'] == doenca_selecionada | tabela_pacientes['CPF'] == doenca_selecionada]
 
         print(doenca_procurada)
