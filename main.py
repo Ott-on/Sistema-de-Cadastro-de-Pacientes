@@ -9,7 +9,10 @@ from tkinter import PhotoImage, ttk
 from telas.login_medico import LoginMedico
 from telas.cadastro_medico import CadastroMedico
 from telas.menu_opcoes import MenuOpcoes
-
+from telas.relatorio import Relatorio
+from telas.tela_paciente import Pacientes
+from telas.tela_doenca import Doenca
+from telas.tela_paciente_cadastro import cadastrarPacientes
 
 LARGEFONT = ("Verdana", 35)
 
@@ -33,7 +36,7 @@ class tkinterApp(tk.Tk):
 
         self.frames = {}
 
-        for F in (LoginMedico, CadastroMedico, MenuOpcoes):
+        for F in (LoginMedico, CadastroMedico, MenuOpcoes, Relatorio, Pacientes, Doenca, cadastrarPacientes):
             frame = F(container, self)
             self.frames[F] = frame
             frame.grid(row=0, column=0, sticky="nsew")

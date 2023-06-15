@@ -18,15 +18,28 @@ class MenuOpcoes(tk.Frame):
         button_sair.place(x=850, y=3)
 
         # botão paciente:
-        button_paciente = Button(self, bg='#02bae8', fg='white', relief=RAISED, overrelief=RAISED, text='Paciente', width=10, height=2, font=("Arial", 20))
+        button_paciente = Button(self, bg='#02bae8', fg='white', relief=RAISED, overrelief=RAISED, text='Paciente',command=lambda: self.pacientes(controller), width=10, height=2, font=("Arial", 20))
         button_paciente.place(x=100, y=470)
         # botão doença:
-        button_doenca = Button(self, bg='#02bae8', fg='white', relief=RAISED, overrelief=RAISED, text='Doenças', width=10, height=2, font=("Arial", 20))
+        button_doenca = Button(self, bg='#02bae8', fg='white', relief=RAISED, overrelief=RAISED, text='Doenças',command=lambda: self.doencas(controller), width=10, height=2, font=("Arial", 20))
         button_doenca.place(x=410, y=470)
         # botão relatório:
-        button_relatorio = Button(self, bg='#02bae8', fg='white', relief=RAISED, overrelief=RAISED, text='Relatório', width=10, height=2, font=("Arial", 20))
+        button_relatorio = Button(self, bg='#02bae8', fg='white', relief=RAISED, overrelief=RAISED, text='Relatório',command=lambda: self.relatorio(controller), width=10, height=2, font=("Arial", 20))
         button_relatorio.place(x=730, y=470)
 
     def deslogar(self, controller):
         from telas.login_medico import LoginMedico
         controller.show_frame(LoginMedico)
+
+    def pacientes(self,controller):
+        from telas.tela_paciente import Pacientes
+        controller.show_frame(Pacientes)
+    
+    def doencas(self,controller):
+        from telas.tela_doenca import Doenca
+        controller.show_frame(Doenca)
+    
+    def relatorio(self,controller):
+        from telas.relatorio import Relatorio
+        controller.show_frame(Relatorio)
+    

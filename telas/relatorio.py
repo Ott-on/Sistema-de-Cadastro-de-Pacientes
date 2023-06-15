@@ -3,10 +3,14 @@ from tkinter import RAISED, RIDGE, Button, Entry, Label, PhotoImage, messagebox
 from modelos.paciente import *
 
 
-class CadastroPaciente(tk.Frame):
+class Relatorio(tk.Frame):
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
         self.configure(bg='#242323')
+
+        #retangulo azul da tela
+        label_retangulo = Label(self, width=1000, height=4, bg='#02bae8')
+        label_retangulo.place(x=0, y=0)
 
         # Nome
         entrada_nome = Entry(self,width=14, font=(
@@ -58,7 +62,16 @@ class CadastroPaciente(tk.Frame):
         entrada_civil.place(x=660, y=450)
 
         self.entrada_civil = entrada_civil
+        img = PhotoImage(file='imagens/voltar_label.png')
+        button_image = Button(self, image=img, bg='#02bae8', fg='#02bae8', activebackground='#02bae8', command=lambda: self.voltar_menu(
+            controller), relief='solid', overrelief='solid', borderwidth=0, highlightthickness=0)
+        button_image.image = img
+        button_image.place(x=10, y=10)  
 
+    def voltar_menu(self, controller):
+        from telas.menu_opcoes import MenuOpcoes
+        controller.show_frame(MenuOpcoes)
+        
     def fazer_cadastro(self):
         nome = self.entrada_nome.get()
         cpf = self.entrada_cpf.get()

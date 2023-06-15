@@ -57,7 +57,7 @@ class LoginMedico(tk.Frame):
         botao_login.place(x=670, y=330)
 
         botao_cadastro = Button(self, text='Cadastra-se', width=10, command=lambda: self.fazer_cadastro(sistema_medico, controller), height=1, font=(
-            "Arial", 10, "underline"), bg='#242323', fg='#02bae8', relief='solid', overrelief='solid', borderwidth=0, highlightthickness=0)
+            "Arial", 10, "underline"), activebackground='#242323', bg='#242323', fg='#02bae8', relief='solid', overrelief='solid', borderwidth=0, highlightthickness=0)
         botao_cadastro.place(x=845, y=400)
 
     def fazer_login(self, sistema_medico: SistemaMedico, controller):
