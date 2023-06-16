@@ -100,12 +100,20 @@ class cadastrarPacientes(tk.Frame):
         button_image.image = img
         button_image.place(x=10, y=10)
 
+        # botão confirmar cadastro
+        button_cadastrar = Button(self, text='Confirmar', font=("Arial", 16), activebackground='#02bae8', bg='#02bae8', fg='white', command=lambda: self.fazer_cadastro(controller), relief='solid', overrelief='solid', width=10, height=2, borderwidth=0, highlightthickness=0)
+        
+        button_cadastrar.place(x=700, y=450)
+
 
     def voltar_menu(self, controller):
         from telas.menu_opcoes import MenuOpcoes
         controller.show_frame(MenuOpcoes)
 
     def fazer_cadastro(self, controller):
+        from modelos.sistema_pacientes import SistemaPacientes
+        from modelos.paciente import Paciente
+        
         nome = self.entrada_nome.get()
         cpf = self.entrada_cpf.get()
         email = self.entrada_email.get()
@@ -114,7 +122,13 @@ class cadastrarPacientes(tk.Frame):
         nascimento = self.entrada_nascimento.get_date()
         sexo = self.entrada_sexo.get()
         civil = self.entrada_civil.get()
-        print(nascimento)
+        
+        # manda os dados para sistema pacientes e armazena no arquivo csv
+        Paciente = Paciente(nome, cpf, email, telefone, celular, nascimento, sexo, civil)
+        SistemaPacientes.cadastrar(self, Paciente)
+
+        # voltar ao menu
+        self.voltar_menu(controller)
 
         # Aqui verificamos se os campos foram preenchidos caso não deve mostrar um erro pedindo para preencher os campos
         if cpf.isdigit() and len(cpf) == 11 and telefone.isalpha() and celular.isalpha() and sexo.isalpha() and civil.isalpha():
