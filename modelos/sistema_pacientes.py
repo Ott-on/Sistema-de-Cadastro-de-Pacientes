@@ -1,8 +1,5 @@
 import pandas as pd
 import os.path
-
-rom paciente import *f
-
 from modelos.paciente import Paciente
 
 
@@ -30,7 +27,7 @@ class SistemaPacientes:
         }
 
         df = pd.DataFrame(dados)
-        df.to_csv("dados/pacientes.csv", index=False, sep=',', mode='a')
+        df.to_csv("dados/pacientes.csv", index=False, sep=';', mode='a')
 
         lido = pd.read_csv("dados/pacientes.csv")
         print(lido)
@@ -45,7 +42,7 @@ class SistemaPacientes:
         paciente_procurado = tabela_pacientes.loc[tabela_pacientes['Nome'] == paciente_selecionado | tabela_pacientes['CPF'] == paciente_selecionado]
 
         # retira a linha do arquivo
-        tabela_pacientes = df.drop(paciente_procurado.index)
+        tabela_pacientes = tabela_pacientes.drop(paciente_procurado.index)
 
         # substitui o arquivo antigo pelo arquivo sem o paciente
         tabela_pacientes.to_csv('dados/pacientes.csv', index=False, sep=';')
@@ -71,9 +68,10 @@ class SistemaPacientes:
 
     def consultar_paciente(self, paciente_selecionado):
         # lê o arquivo csv dos pacientes
-        tabela_pacientes = pd.read_csv("dados/pacientes.csv")
+        tabela_pacientes = pd.read_csv("dados/pacientes.csv",sep=";")
 
         # procura a linha do paciente no arquivo
-        paciente_procurado = tabela_pacientes.loc[tabela_pacientes['Nome'] == paciente_selecionado | tabela_pacientes['CPF'] == paciente_selecionado]
+        paciente_procurado = tabela_pacientes.loc[(tabela_pacientes['nome'] == paciente_selecionado) | (tabela_pacientes['cpf'] == paciente_selecionado)]
 
+        #retona as informações como string
         print(paciente_procurado)
