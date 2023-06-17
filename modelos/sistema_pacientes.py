@@ -5,7 +5,6 @@ from modelos.paciente import Paciente
 
 class SistemaPacientes:
     def __init__(self):
-        print('Chamandoooooo')
         self.arquivo_csv = "dados/pacientes.csv"
 
         # Verificar se o arquivo existe

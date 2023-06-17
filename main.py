@@ -11,9 +11,9 @@ from telas.cadastro_medico import CadastroMedico
 from telas.menu_opcoes import MenuOpcoes
 from telas.relatorio import Relatorio
 from telas.tela_paciente import Pacientes
-from telas.tela_doenca import Doenca
-from telas.tela_paciente_cadastro import cadastrarPacientes
-from telas.tela_doenca_cadastro import cadastrarDoencas
+from telas.doencas_cadastradas import Doenca
+from telas.paciente_cadastro import cadastrarPacientes
+from telas.cadastro_doenca import cadastrarDoencas
 LARGEFONT = ("Verdana", 35)
 
 

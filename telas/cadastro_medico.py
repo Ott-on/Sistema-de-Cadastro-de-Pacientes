@@ -100,13 +100,14 @@ class CadastroMedico(tk.Frame):
             if len(crm) == 7:
                 if len(senha) >= 8:
                     # Se todas as verificações darem certo.
-                    sistema_medico.cadastrar(crm, entrada_nome_medico, usuario, senha, lambda: controller.show_frame(LoginMedico))
+                    sistema_medico.cadastrar(
+                        crm, entrada_nome_medico, usuario, senha, lambda: controller.show_frame(LoginMedico))
                 else:
                     messagebox.showinfo(
-                "Aviso!", "A senha deve conter no mínimo 8 caracteres!", icon="warning")
+                        "Aviso!", "A senha deve conter no mínimo 8 caracteres!", icon="warning")
             else:
                 messagebox.showinfo(
-                "Aviso!", "CRM inválido!", icon="warning")
+                    "Aviso!", "CRM inválido!", icon="warning")
 
         else:
             messagebox.showinfo(
