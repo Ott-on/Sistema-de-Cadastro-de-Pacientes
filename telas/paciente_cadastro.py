@@ -1,14 +1,17 @@
 import tkinter as tk
+from tkinter.ttk import Combobox
 from tkcalendar import DateEntry
 from tkinter import END, RAISED, RIDGE, Button, Entry, Label, PhotoImage, messagebox
-from modelos.paciente import *
-from tkinter import ttk
+from modelos.sistema_pacientes import SistemaPacientes
+from modelos.paciente import Paciente
 
 
 class cadastrarPacientes(tk.Frame):
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
         self.configure(bg='#242323')
+
+        sistema_pacientes = SistemaPacientes()
 
         # retangulo azul da tela
         label_retangulo = Label(self, width=1000, height=4, bg='#02bae8')
@@ -75,7 +78,7 @@ class cadastrarPacientes(tk.Frame):
         self.entrada_nascimento = entrada_nascimento
 
         # Sexo
-        entrada_sexo = ttk.Combobox(
+        entrada_sexo = Combobox(
             self, values=['Masculino', 'Feminino', 'Prefiro não dizer'])
         entrada_sexo.place(x=700, y=190)
         entrada_sexo.current(0)
@@ -86,7 +89,7 @@ class cadastrarPacientes(tk.Frame):
         self.entrada_sexo = entrada_sexo
 
         # Estado Civil
-        entrada_civil = ttk.Combobox(
+        entrada_civil = Combobox(
             self, values=['Solteiro', 'Casado', 'Divorciado', 'Viúvo'])
         entrada_civil.place(x=700, y=340)
         entrada_civil.current(0)
@@ -97,20 +100,20 @@ class cadastrarPacientes(tk.Frame):
         self.entrada_civil = entrada_civil
 
         img = PhotoImage(file='imagens/voltar_label.png')
-        button_image = Button(self, image=img, bg='#02bae8', fg='#02bae8', activebackground='#02bae8', command=lambda: self.voltar_menu(
+        button_image = Button(self, image=img, bg='#02bae8', fg='#02bae8', activebackground='#02bae8', command=lambda: self.voltar(
             controller), relief='solid', overrelief='solid', borderwidth=0, highlightthickness=0)
         button_image.image = img
         button_image.place(x=10, y=10)
 
         # botão confirmar cadastro
         button_cadastrar = Button(self, text='Confirmar', font=("Arial", 16), activebackground='#02bae8', bg='#02bae8', fg='white', command=lambda: self.fazer_cadastro(
-            controller), relief='solid', overrelief='solid', width=10, height=2, borderwidth=0, highlightthickness=0)
+            sistema_pacientes, controller), relief='solid', overrelief='solid', width=10, height=2, borderwidth=0, highlightthickness=0)
 
         button_cadastrar.place(x=700, y=450)
 
-    def voltar_menu(self, controller):
-        from telas.menu_opcoes import MenuOpcoes
-        controller.show_frame(MenuOpcoes)
+    def voltar(self, controller):
+        from telas.tela_paciente import Pacientes
+        controller.show_frame(Pacientes)
 
     # Metodo para limpar os campos
     def limpar_campos(self):
@@ -123,9 +126,7 @@ class cadastrarPacientes(tk.Frame):
         self.entrada_sexo.delete(0, END)
         self.entrada_civil.delete(0, END)
 
-    def fazer_cadastro(self, controller):
-        from modelos.sistema_pacientes import SistemaPacientes
-        from modelos.paciente import Paciente
+    def fazer_cadastro(self, sistema_pacientes: SistemaPacientes, controller):
 
         nome = self.entrada_nome.get()
         cpf = self.entrada_cpf.get()
@@ -146,10 +147,12 @@ class cadastrarPacientes(tk.Frame):
                     if len(telefone) == 11:
                         if len(telefone) == 11:
                             print('Tudo ok!')
-                            Paciente = Paciente(nome, cpf, email, telefone,
+                            paciente = Paciente(nome, cpf, email, telefone,
                                                 celular, nascimento_formatado, sexo, civil)
-                            SistemaPacientes.cadastrar(self, Paciente)
-                            # self.limpar_campos()
+                            sistema_pacientes.cadastrar(paciente)
+                            messagebox.showinfo(
+                                "Sucesso!", "Paciente cadastrado com sucesso!")
+                            self.limpar_campos()
                         else:
                             messagebox.showinfo(
                                 "Aviso!", "Informe um telefone valido ex: DD912345678", icon="warning")
