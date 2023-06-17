@@ -3,7 +3,7 @@ from tkinter import RAISED, RIDGE, Button, Entry, Label, PhotoImage, messagebox
 from modelos.sistema_doencas import *
 
 
-class Doencas(tk.Frame):
+class Doenca(tk.Frame):
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
         self.configure(bg='#242323')
