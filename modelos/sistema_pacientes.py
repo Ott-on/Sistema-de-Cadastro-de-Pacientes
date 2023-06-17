@@ -9,11 +9,27 @@ class SistemaPacientes:
 
         # Verificar se o arquivo existe
         if not os.path.isfile(self.arquivo_csv):
-            print('não existe')
             # Criar o arquivo e adicionar os cabeçalhos das colunas
             df_cabecalho = pd.DataFrame(columns=[
-                                        "Nome", "CPF", "Email", "Telefone", "Celular", "Data de Nascimento", "Sexo", "Estado Civil"])
+                                        "nome", "cpf", "email", "telefone", "celular", "data_nascimento", "sexo", "estado_civil"])
             df_cabecalho.to_csv(self.arquivo_csv, index=False, sep=';')
+
+    def obter_pacientes(self):
+        tabela_pacientes = pd.read_csv(self.arquivo_csv, sep=";")
+        pacientes = []
+        for _, row in tabela_pacientes.iterrows():
+            paciente = (
+                row['cpf'],
+                row['nome'],
+                row['email'],
+                row['telefone'],
+                row['celular'],
+                row['data_nascimento'],
+                row['sexo'],
+                row['estado_civil']
+            )
+            pacientes.append(paciente)
+        return pacientes
 
     # Metodo para cadastrar paciente
     def cadastrar(self, paciente: Paciente):
@@ -30,9 +46,10 @@ class SistemaPacientes:
 
         df = pd.DataFrame(dados)
 
-        df.to_csv("dados/pacientes.csv", index=False, sep=';', mode='a')
+        df.to_csv(self.arquivo_csv, index=False,
+                  sep=';', mode='a', header=False)
 
-        lido = pd.read_csv("dados/pacientes.csv")
+        lido = pd.read_csv(self.arquivo_csv)
         print(lido)
 
     def remover(self, paciente_selecionado):
@@ -72,7 +89,8 @@ class SistemaPacientes:
         # lê o arquivo csv dos pacientes
         tabela_pacientes = pd.read_csv("dados/pacientes.csv", sep=";")
         # procura a linha do paciente no arquivo
-        paciente_procurado = tabela_pacientes.loc[(tabela_pacientes['nome'] == paciente_selecionado) | (tabela_pacientes['cpf'] == paciente_selecionado)]
+        paciente_procurado = tabela_pacientes.loc[(tabela_pacientes['nome'] == paciente_selecionado) | (
+            tabela_pacientes['cpf'] == paciente_selecionado)]
 
         # Se paciente_procurado não estiver vazio, retorna as informações como um dicionário
         if not paciente_procurado.empty:
