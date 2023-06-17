@@ -26,11 +26,14 @@ class Pacientes(tk.Frame):
         
         self.entrada_pesquisa = entrada_pesquisa
 
-        #mostrar paciente
-        label_paciente = Label(Label(self, text ='', width=20, height=4, bg='white'))
+        # mostrar paciente
+        label_paciente = Label(self, text='', width=30, height=8, bg='white')
         label_paciente.grid(row=1, column=0)
 
+        label_paciente.place(x=10, y=100)
+
         self.label_paciente = label_paciente
+
         #botão voltar
         img = PhotoImage(file='imagens/voltar_label.png')
         button_image = Button(self, image=img, bg='#02bae8', fg='#02bae8', activebackground='#02bae8', command=lambda: self.voltar_menu(
@@ -43,13 +46,20 @@ class Pacientes(tk.Frame):
         button_cadastrar.place(x=100, y=2)
 
 
-    def pesquisar(self,controller):
+        def pesquisar(self,controller):
         from modelos.sistema_pacientes import SistemaPacientes
 
         paciente_selecionado = self.entrada_pesquisa.get()
         
         self.sistema_pacientes = SistemaPacientes()
         paciente = self.sistema_pacientes.consultar_paciente(paciente_selecionado=paciente_selecionado)
+
+        if paciente:
+            # Atualizar o texto do label_paciente com os dados do paciente encontrado
+            self.label_paciente.config(text=f"Nome: {paciente['nome']}\nCpf: {paciente['cpf']}\nEmail: {paciente['email']}\nTelefone: {paciente['telefone']}\nCelular: {paciente['celular']}\nData_mascimento: {paciente['data_nascimento']}\nSexo: {paciente['sexo']}\nEstado_civil: {paciente['estado_civil']}", justify='left', anchor='w')
+
+        else:
+            self.label_paciente.config(text="Paciente não encontrado", anchor='center')
 
     def voltar_menu(self, controller):
         from telas.menu_opcoes import MenuOpcoes
