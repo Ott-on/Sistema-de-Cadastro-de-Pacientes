@@ -44,6 +44,12 @@ class tkinterApp(tk.Tk):
         frame = self.frames[cont]
         frame.tkraise()
 
+    # Função que instancia po frame e troca a tela quando chamada.
+    def carregar_tela(self, screen):
+        frame = screen(self.container, self)
+        frame.grid(row=0, column=0, sticky="nsew")
+        frame.tkraise()
+
 
 app = tkinterApp()
 app.mainloop()
