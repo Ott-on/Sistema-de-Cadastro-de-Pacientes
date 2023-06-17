@@ -10,29 +10,27 @@ class SistemaPacientes:
 
         # Verificar se o arquivo existe
         if not os.path.isfile(self.arquivo_csv):
-            print('nâo existe')
+            print('não existe')
             # Criar o arquivo e adicionar os cabeçalhos das colunas
-            df_cabecalho = pd.DataFrame(columns=[
-                                        "Nome", "CPF", "Email", "Telefone", "Celular", "Data_nascimento", "Sexo", "Estado_civil"])
+            df_cabecalho = pd.DataFrame(columns=["Nome", "CPF", "Email", "Telefone", "Celular", "Data de Nascimento", "Sexo", "Estado Civil"])
             df_cabecalho.to_csv(self.arquivo_csv, index=False, sep=';')
 
     # Metodo para cadastrar paciente
     def cadastrar(self, paciente: Paciente):
         dados = {
-            "Nome": [paciente.nome],
-            "Cpf": [paciente.cpf],
-            "Email": [paciente.email],
-            "Telefone": [paciente.telefone],
-            "Celular": [paciente.celular],
-            "Data_nascimento": [paciente.data_nascimento],
-            "Sexo": [paciente.sexo],
-            "Estado_civil": [paciente.estado_civil],
+            "nome": [paciente.nome],
+            "cpf": [paciente.cpf],
+            "email": [paciente.email], 
+            "telefone": [paciente.telefone], 
+            "celular": [paciente.celular], 
+            "data_nascimento": [paciente.data_nascimento], 
+            "sexo": [paciente.sexo], 
+            "estado_civil": [paciente.estado_civil],
         }
 
         df = pd.DataFrame(dados)
 
-        df.to_csv("dados/pacientes.csv", index=False,
-                  sep=';', mode='a', header=False)
+        df.to_csv("dados/pacientes.csv", index=False, sep=';', mode='a')
 
         lido = pd.read_csv("dados/pacientes.csv")
         print(lido)
@@ -43,8 +41,7 @@ class SistemaPacientes:
         tabela_pacientes = pd.read_csv("dados/pacientes.csv")
 
         # procura a linha do paciente no arquivo
-        paciente_procurado = tabela_pacientes.loc[tabela_pacientes['Nome'] ==
-                                                  paciente_selecionado | tabela_pacientes['CPF'] == paciente_selecionado]
+        paciente_procurado = tabela_pacientes.loc[tabela_pacientes['Nome'] == paciente_selecionado | tabela_pacientes['CPF'] == paciente_selecionado]
 
         # retira a linha do arquivo
         tabela_pacientes = tabela_pacientes.drop(paciente_procurado.index)
@@ -58,13 +55,10 @@ class SistemaPacientes:
         tabela_pacientes = pd.read_csv("dados/pacientes.csv")
 
         # procura a linha do paciente no arquivo
-        paciente_procurado = tabela_pacientes.loc[tabela_pacientes['Nome'] ==
-                                                  paciente_selecionado | tabela_pacientes['CPF'] == paciente_selecionado]
+        paciente_procurado = tabela_pacientes.loc[tabela_pacientes['Nome'] == paciente_selecionado | tabela_pacientes['CPF'] == paciente_selecionado]
 
         # altera o dado especifico da linha
-        paciente_procurado.loc[paciente_procurado.index,
-                               dado_para_alterar] = novo_dado
-
+        paciente_procurado.loc[paciente_procurado.index, dado_para_alterar] = novo_dado
         # coloca o novo dado no arquivo principal de pacientes
         tabela_pacientes.loc[paciente_procurado.index] = paciente_procurado
 
@@ -73,11 +67,8 @@ class SistemaPacientes:
 
     def consultar_paciente(self, paciente_selecionado):
         # lê o arquivo csv dos pacientes
-        tabela_pacientes = pd.read_csv("dados/pacientes.csv", sep=";")
-
+        tabela_pacientes = pd.read_csv("dados/pacientes.csv",sep=";")
         # procura a linha do paciente no arquivo
-        paciente_procurado = tabela_pacientes.loc[(tabela_pacientes['nome'] == paciente_selecionado) | (
-            tabela_pacientes['cpf'] == paciente_selecionado)]
-
+        paciente_procurado = tabela_pacientes.loc[(tabela_pacientes['nome'] == paciente_selecionado) | (tabela_pacientes['cpf'] == paciente_selecionado)]
         # retona as informações como string
         print(paciente_procurado)
