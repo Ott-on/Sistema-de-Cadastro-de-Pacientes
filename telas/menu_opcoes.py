@@ -39,7 +39,7 @@ class MenuOpcoes(tk.Frame):
 
     def pacientes(self, controller):
         from telas.tela_paciente import Pacientes
-        controller.show_frame(Pacientes)
+        controller.carregar_tela(Pacientes)
 
     def doencas(self, controller):
         from telas.doencas_cadastradas import Doenca

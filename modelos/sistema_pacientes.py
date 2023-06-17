@@ -83,28 +83,42 @@ class SistemaPacientes:
         tabela_pacientes.loc[paciente_procurado.index] = paciente_procurado
 
         # substitui a o arquivo antigo pelo arquivo alterado
-        tabela_pacientes.to_csv('dados/pacientes.csv', index=False, sep=';')
+        tabela_pacientes.to_csv(self.arquivo_csv, index=False, sep=';')
 
-    def consultar(self, paciente_selecionado):
+    def consultar(self, buscador):
+        # Converter o buscador para string
+        buscador = str(buscador)
+
         # lê o arquivo csv dos pacientes
-        tabela_pacientes = pd.read_csv("dados/pacientes.csv", sep=";")
-        # procura a linha do paciente no arquivo
-        paciente_procurado = tabela_pacientes.loc[(tabela_pacientes['nome'] == paciente_selecionado) | (
-            tabela_pacientes['cpf'] == paciente_selecionado)]
+        tabela_pacientes = pd.read_csv(self.arquivo_csv, sep=";")
 
-        # Se paciente_procurado não estiver vazio, retorna as informações como um dicionário
-        if not paciente_procurado.empty:
-            paciente_info = {
-                'nome': paciente_procurado['nome'].values[0],
-                'cpf': paciente_procurado['cpf'].values[0],
-                'email': paciente_procurado['email'].values[0],
-                'telefone': paciente_procurado['telefone'].values[0],
-                'celular': paciente_procurado['celular'].values[0],
-                'data_nascimento': paciente_procurado['data_nascimento'].values[0],
-                'sexo': paciente_procurado['sexo'].values[0],
-                'estado_civil': paciente_procurado['estado_civil'].values[0],
-            }
-            return paciente_info
+        # Verificar se o buscador é um CPF válido
+        if buscador.isdigit():
+            # Buscar pelo CPF
+            pacientes_procurados = tabela_pacientes.loc[tabela_pacientes['cpf'].astype(
+                str).str.contains(buscador)]
+        else:
+            # Buscar pelo nome ou parte do nome
+            pacientes_procurados = tabela_pacientes.loc[tabela_pacientes['nome'].astype(
+                str).str.contains(buscador, case=False)]
 
-        # retorna None se estiver vazio
+        # Se houver pacientes encontrados, retorna as informações como uma lista de tuplas
+        if not pacientes_procurados.empty:
+            pacientes_info = []
+            for _, paciente in pacientes_procurados.iterrows():
+                paciente_info = (
+                    paciente['cpf'],
+                    paciente['nome'],
+                    paciente['email'],
+                    paciente['telefone'],
+                    paciente['celular'],
+                    paciente['data_nascimento'],
+                    paciente['sexo'],
+                    paciente['estado_civil'],
+                )
+                pacientes_info.append(paciente_info)
+
+            return pacientes_info
+
+        # Retorna None se não houver pacientes encontrados
         return None

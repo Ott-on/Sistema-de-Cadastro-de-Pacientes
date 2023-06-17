@@ -113,7 +113,7 @@ class cadastrarPacientes(tk.Frame):
 
     def voltar(self, controller):
         from telas.tela_paciente import Pacientes
-        controller.show_frame(Pacientes)
+        controller.carregar_tela(Pacientes)
 
     # Metodo para limpar os campos
     def limpar_campos(self):

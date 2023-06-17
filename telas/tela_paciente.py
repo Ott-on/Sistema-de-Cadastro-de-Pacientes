@@ -13,12 +13,11 @@ class Pacientes(tk.Frame):
         print("pacientes=============>")
 
         sistema_pacientes = SistemaPacientes()
-        pacientes = sistema_pacientes.obter_pacientes()
-        print(pacientes)
+        self.pacientes = sistema_pacientes.obter_pacientes()
 
         # Criar a barra de rolagem
         scrollbar = tk.Scrollbar(self)
-        scrollbar.place(x=950, y=80)
+        scrollbar.place(x=972, y=150, height=446)
 
         # retangulo azul da tela
         label_retangulo = Label(self, width=1000, height=4, bg='#02bae8')
@@ -26,7 +25,8 @@ class Pacientes(tk.Frame):
 
         # botão pesquisar:
         img2 = PhotoImage(file='imagens/pesquisar.png')
-        button_image = Button(self, image=img2, bg='#02bae8', fg='#02bae8', activebackground='#02bae8', command=lambda: self.pesquisar(controller),
+        print(self.pacientes)
+        button_image = Button(self, image=img2, bg='#02bae8', fg='#02bae8', activebackground='#02bae8', command=lambda: self.pesquisar(sistema_pacientes, controller),
                               relief='solid', overrelief='solid', borderwidth=0, highlightthickness=0)
         button_image.image = img2
         button_image.place(x=920, y=10)
@@ -35,6 +35,10 @@ class Pacientes(tk.Frame):
         entrada_pesquisa = Entry(self, width=10, font=(
             "Arial", 25), bg='#636262', highlightthickness=0, relief='solid')
         entrada_pesquisa.place(x=720, y=10)
+
+        # Adicionando um ouvinte de evento que quando digitamos algo chama essa função
+        entrada_pesquisa.bind(
+            '<KeyRelease>', lambda event: self.__verificar_campo_pesquisa())
 
         self.entrada_pesquisa = entrada_pesquisa
 
@@ -53,66 +57,54 @@ class Pacientes(tk.Frame):
             "Arial", 18), bg='#242323', fg='#888a89')
         label_selecionar_paciente.place(x=10, y=80)
 
-        treeview = Treeview(self, columns=(
+        self.treeview = Treeview(self, columns=(
             "CPF", "Nome", "Email", "Telefone", "Celular", "Data_Nascimento", "Sexo", "Estado_Civil"), height=21,  show="headings")
 
-        treeview.column("CPF", width=100)
-        treeview.column("Telefone", width=100)
-        treeview.column("Celular", width=100)
-        treeview.column("Data_Nascimento", width=120)
-        treeview.column("Estado_Civil", width=80)
-        treeview.column("Sexo", width=50)
+        self.treeview.column("CPF", width=100)
+        self.treeview.column("Email", width=150)
+        self.treeview.column("Telefone", width=120)
+        self.treeview.column("Celular", width=110)
+        self.treeview.column("Data_Nascimento", width=120)
+        self.treeview.column("Estado_Civil", width=80)
+        self.treeview.column("Sexo", width=80)
 
         # Definir as colunas
-        treeview.heading("CPF", text="CPF")
-        treeview.heading("Nome", text="Nome")
-        treeview.heading("Email", text="Email")
-        treeview.heading("Telefone", text="Telefone")
-        treeview.heading("Celular", text="Celular")
-        treeview.heading("Data_Nascimento", text="Data de Nascimento")
-        treeview.heading("Sexo", text="Sexo")
-        treeview.heading("Estado_Civil", text="Estado Civil")
+        self.treeview.heading("CPF", text="CPF")
+        self.treeview.heading("Nome", text="Nome")
+        self.treeview.heading("Email", text="Email")
+        self.treeview.heading("Telefone", text="Telefone")
+        self.treeview.heading("Celular", text="Celular")
+        self.treeview.heading("Data_Nascimento", text="Data de Nascimento")
+        self.treeview.heading("Sexo", text="Sexo")
+        self.treeview.heading("Estado_Civil", text="Estado Civil")
 
-        treeview.place(x=10, y=150)
+        self.treeview.place(x=10, y=150)
 
-        # Adicionar dados de exemplo
-        dados = [
-            ("João", 25, "123.456.789-01"),
-            ("Maria", 30, "987.654.321-09"),
-            ("Pedro", 40, "456.789.123-45"),
-        ]
+        for dado in self.pacientes:
+            self.treeview.insert("", "end", values=dado)
 
-        for dado in pacientes:
-            print(dado)
-            treeview.insert("", "end", values=dado)
-
-        treeview.configure(yscrollcommand=scrollbar.set)
-        scrollbar.configure(command=treeview.yview)
-
-        # Posicionar o Treeview na janela
-        # treeview.pack(side="left", fill="both", expand=False)
-
-        # Adicionar botões de ação
+        self.treeview.configure(yscrollcommand=scrollbar.set)
+        scrollbar.configure(command=self.treeview.yview)
 
         def atender():
             # Lógica para atender
-            selected_item = treeview.selection()
+            selected_item = self.treeview.selection()
             if selected_item:
-                item = treeview.item(selected_item)
+                item = self.treeview.item(selected_item)
                 print("Atender:", item["values"])
 
         def alterar():
             # Lógica para alterar
-            selected_item = treeview.selection()
+            selected_item = self.treeview.selection()
             if selected_item:
-                item = treeview.item(selected_item)
+                item = self.treeview.item(selected_item)
                 print("Alterar:", item["values"])
 
         def excluir():
             # Lógica para excluir
-            selected_item = treeview.selection()
+            selected_item = self.treeview.selection()
             if selected_item:
-                item = treeview.item(selected_item)
+                item = self.treeview.item(selected_item)
                 print("Excluir:", item["values"])
 
         frame = tk.Frame(self)
@@ -130,23 +122,28 @@ class Pacientes(tk.Frame):
         botao_excluir = tk.Button(frame, text="Excluir", command=excluir)
         botao_excluir.pack(side="left", padx=2, pady=2)
 
-    def pesquisar(self, controller):
-        from modelos.sistema_pacientes import SistemaPacientes
+    # função que verifica se o campo de pesquisa esta vazio caso esteja ele carrega todos os pacientes
+    def __verificar_campo_pesquisa(self):
+        if len(self.entrada_pesquisa.get()) == 0:
+            self.treeview.delete(*self.treeview.get_children())
+            for dado in self.pacientes:
+                self.treeview.insert("", "end", values=dado)
+
+    def pesquisar(self, sistema_pacientes: SistemaPacientes, controller):
 
         paciente_selecionado = self.entrada_pesquisa.get()
 
-        self.sistema_pacientes = SistemaPacientes()
-        paciente = self.sistema_pacientes.consultar(
-            paciente_selecionado=paciente_selecionado)
+        pacientes_encontrados = sistema_pacientes.consultar(
+            buscador=paciente_selecionado)
 
-        if paciente:
-            # Atualizar o texto do label_paciente com os dados do paciente encontrado
-            self.label_paciente.config(
-                text=f"Nome: {paciente['nome']}\nCpf: {paciente['cpf']}\nEmail: {paciente['email']}\nTelefone: {paciente['telefone']}\nCelular: {paciente['celular']}\nData_mascimento: {paciente['data_nascimento']}\nSexo: {paciente['sexo']}\nEstado_civil: {paciente['estado_civil']}", justify='left', anchor='w')
-
+        if pacientes_encontrados:
+            self.treeview.delete(*self.treeview.get_children())
+            for dado in pacientes_encontrados:
+                self.treeview.insert("", "end", values=dado)
         else:
-            self.label_paciente.config(
-                text="Paciente não encontrado", anchor='center')
+            self.treeview.delete(*self.treeview.get_children())
+            messagebox.showinfo(
+                "Aviso!", "Paciente não encontrado!", icon="warning")
 
     def voltar_menu(self, controller):
         from telas.menu_opcoes import MenuOpcoes
