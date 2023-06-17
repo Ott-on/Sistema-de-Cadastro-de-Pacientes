@@ -46,23 +46,23 @@ class Pacientes(tk.Frame):
             controller), relief='solid', overrelief='solid', width=10, height=2, borderwidth=0, highlightthickness=0)
         button_cadastrar.place(x=100, y=2)
 
-        def pesquisar(self, controller):
-            from modelos.sistema_pacientes import SistemaPacientes
+    def pesquisar(self, controller):
+        from modelos.sistema_pacientes import SistemaPacientes
 
-            paciente_selecionado = self.entrada_pesquisa.get()
+        paciente_selecionado = self.entrada_pesquisa.get()
 
-            self.sistema_pacientes = SistemaPacientes()
-            paciente = self.sistema_pacientes.consultar_paciente(
-                paciente_selecionado=paciente_selecionado)
+        self.sistema_pacientes = SistemaPacientes()
+        paciente = self.sistema_pacientes.consultar_paciente(
+            paciente_selecionado=paciente_selecionado)
 
-            if paciente:
-                # Atualizar o texto do label_paciente com os dados do paciente encontrado
-                self.label_paciente.config(
-                    text=f"Nome: {paciente['nome']}\nCpf: {paciente['cpf']}\nEmail: {paciente['email']}\nTelefone: {paciente['telefone']}\nCelular: {paciente['celular']}\nData_mascimento: {paciente['data_nascimento']}\nSexo: {paciente['sexo']}\nEstado_civil: {paciente['estado_civil']}", justify='left', anchor='w')
+        if paciente:
+            # Atualizar o texto do label_paciente com os dados do paciente encontrado
+            self.label_paciente.config(
+                text=f"Nome: {paciente['nome']}\nCpf: {paciente['cpf']}\nEmail: {paciente['email']}\nTelefone: {paciente['telefone']}\nCelular: {paciente['celular']}\nData_mascimento: {paciente['data_nascimento']}\nSexo: {paciente['sexo']}\nEstado_civil: {paciente['estado_civil']}", justify='left', anchor='w')
 
-            else:
-                self.label_paciente.config(
-                    text="Paciente não encontrado", anchor='center')
+        else:
+            self.label_paciente.config(
+                text="Paciente não encontrado", anchor='center')
 
     def voltar_menu(self, controller):
         from telas.menu_opcoes import MenuOpcoes

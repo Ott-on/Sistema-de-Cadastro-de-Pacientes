@@ -72,6 +72,7 @@ class SistemaPacientes:
         # lê o arquivo csv dos pacientes
         tabela_pacientes = pd.read_csv("dados/pacientes.csv", sep=";")
         # procura a linha do paciente no arquivo
+        paciente_procurado = tabela_pacientes.loc[(tabela_pacientes['nome'] == paciente_selecionado) | (tabela_pacientes['cpf'] == paciente_selecionado)]
 
         # Se paciente_procurado não estiver vazio, retorna as informações como um dicionário
         if not paciente_procurado.empty:
