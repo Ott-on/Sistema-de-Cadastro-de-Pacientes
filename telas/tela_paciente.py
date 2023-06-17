@@ -7,7 +7,7 @@ class Pacientes(tk.Frame):
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
         self.configure(bg='#242323')
-        
+
         #retangulo azul da tela
         label_retangulo = Label(self, width=1000, height=4, bg='#02bae8')
         label_retangulo.place(x=0, y=0)
@@ -41,6 +41,7 @@ class Pacientes(tk.Frame):
         # botão cadastrar:
         button_cadastrar = Button(self, text='CADASTRAR', font=("Arial", 16), activebackground='#02bae8', bg='#02bae8', fg='white', command=lambda: self.cadastrar_pacientes(controller), relief='solid', overrelief='solid', width=10, height=2, borderwidth=0, highlightthickness=0)
         button_cadastrar.place(x=100, y=2)
+
 
     def pesquisar(self,controller):
         from modelos.sistema_pacientes import SistemaPacientes

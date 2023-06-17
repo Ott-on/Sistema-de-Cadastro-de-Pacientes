@@ -1,7 +1,6 @@
 import pandas as pd
 import os.path
 
-
 class SistemaDoenca:
     def __init__(self):
         self.arquivo_csv = "dados/doencas.csv"
@@ -20,7 +19,7 @@ class SistemaDoenca:
         }
 
         df = pd.DataFrame(dados)
-        df.to_csv("dados/otton.csv", index=False, sep=',', mode='a')
+        df.to_csv("dados/doencas.csv", index=False, sep=';', mode='a', header=False)
 
         lido = pd.read_csv("dados/doencas.csv")
         print(lido)
@@ -31,10 +30,10 @@ class SistemaDoenca:
         tabela_doencas = pd.read_csv("dados/doencas.csv")
 
         # procura a linha da doença no arquivo
-        doença_procurada = tabela_doenças .loc[tabela_doenças ['Nome'] == doenca_selecionada | tabela_doenças ['CID'] == doenca_selecionada]
+        doenca_procurada = tabela_doencas.loc[tabela_doencas['Nome'] == doenca_selecionada | tabela_doencas ['CID'] == doenca_selecionada]
 
         # retira a linha do arquivo
-        tabela_doencas = df.drop(doenca_procurada.index)
+        tabela_doencas = tabela_doencas.drop(doenca_procurada.index)
 
         # substitui o arquivo antigo pelo arquivo sem a doença
         tabela_doencas.to_csv('dados/doencas.csv', index=False, sep=';')
@@ -58,9 +57,9 @@ class SistemaDoenca:
 
     def consultar(self, doenca_selecionada):
         # lê o arquivo csv das doenças
-        tabela_doencas = pd.read_csv("dados/doencas.csv")
+        tabela_doencas = pd.read_csv("dados/doencas.csv", sep=';')
 
         # procura a linha do paciente no arquivo
-        doenca_procurada = tabela_doencas.loc[tabela_doencas['Nome'] == doenca_selecionada | tabela_pacientes['CPF'] == doenca_selecionada]
+        doenca_procurada = tabela_doencas.loc[(tabela_doencas['Nome'] == doenca_selecionada) | (tabela_doencas['CID'] == doenca_selecionada)]
 
         print(doenca_procurada)

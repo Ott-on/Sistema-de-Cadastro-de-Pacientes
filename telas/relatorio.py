@@ -23,7 +23,7 @@ class Relatorio(tk.Frame):
         entrada_cpf = Entry(self,width=14, font=(
             "Arial", 25), bg='#636262', highlightthickness=0.5, relief='solid')
         entrada_cpf.place(x=160, y=450)
-
+        
         self.entrada_cpf = entrada_cpf
 
         # Email

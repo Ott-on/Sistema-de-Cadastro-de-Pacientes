@@ -11,8 +11,9 @@ from telas.cadastro_medico import CadastroMedico
 from telas.menu_opcoes import MenuOpcoes
 from telas.relatorio import Relatorio
 from telas.tela_paciente import Pacientes
-from telas.tela_doenca import Doenca
+from telas.tela_doenca import Doencas
 from telas.tela_paciente_cadastro import cadastrarPacientes
+from telas.tela_doenca_cadastro import cadastrarDoencas
 
 LARGEFONT = ("Verdana", 35)
 
@@ -36,7 +37,7 @@ class tkinterApp(tk.Tk):
 
         self.frames = {}
 
-        for F in (LoginMedico, CadastroMedico, MenuOpcoes, Relatorio, Pacientes, Doenca, cadastrarPacientes):
+        for F in (LoginMedico, CadastroMedico, MenuOpcoes, Relatorio, Pacientes, Doencas, cadastrarPacientes, cadastrarDoencas):
             frame = F(container, self)
             self.frames[F] = frame
             frame.grid(row=0, column=0, sticky="nsew")
