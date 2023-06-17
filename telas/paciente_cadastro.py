@@ -7,9 +7,22 @@ from modelos.paciente import Paciente
 
 
 class cadastrarPacientes(tk.Frame):
-    def __init__(self, parent, controller):
+    def __init__(self, parent, controller, *args):
         tk.Frame.__init__(self, parent)
         self.configure(bg='#242323')
+
+        self.modo = "cadastrar"
+        self.paciente_alterar = {}
+
+        if args:
+            print("ENTRANDO NO MODO ALTERAR")
+            self.modo = args[0]["modo"]
+            self.paciente_alterar = args[0]["paciente_alterar"]
+
+        else:
+            print("NOO")
+
+        print(self.paciente_alterar)
 
         sistema_pacientes = SistemaPacientes()
 
@@ -106,10 +119,21 @@ class cadastrarPacientes(tk.Frame):
         button_image.place(x=10, y=10)
 
         # botão confirmar cadastro
-        button_cadastrar = Button(self, text='Confirmar', font=("Arial", 16), activebackground='#02bae8', bg='#02bae8', fg='white', command=lambda: self.fazer_cadastro(
-            sistema_pacientes, controller), relief='solid', overrelief='solid', width=10, height=2, borderwidth=0, highlightthickness=0)
+        button_cadastrar_text = "Salvar Alterações" if self.modo == 'alterar' else "Cadastrar Paciente"
+        button_cadastrar = Button(self, text=button_cadastrar_text, font=("Arial", 16), activebackground='#02bae8', bg='#02bae8', fg='white', command=lambda: self.fazer_cadastro(
+            sistema_pacientes, controller), relief='solid', overrelief='solid', width=15, height=2, borderwidth=0, highlightthickness=0)
 
         button_cadastrar.place(x=700, y=450)
+
+        # Se caso o modo for alterar pegue os dados que está no paciente alterar e preencha os campos
+        if self.modo == 'alterar':
+            self.entrada_nome.insert(0, self.paciente_alterar[1])
+            self.entrada_cpf.insert(0, self.paciente_alterar[0])
+            self.entrada_email.insert(0, self.paciente_alterar[2])
+            self.entrada_telefone.insert(0, self.paciente_alterar[3])
+            self.entrada_celular.insert(0, self.paciente_alterar[4])
+            self.entrada_sexo.insert(0, self.paciente_alterar[5])
+            self.entrada_civil.insert(0, self.paciente_alterar[6])
 
     def voltar(self, controller):
         from telas.tela_paciente import Pacientes
@@ -117,7 +141,6 @@ class cadastrarPacientes(tk.Frame):
 
     # Metodo para limpar os campos
     def limpar_campos(self):
-        self.entrada_nome.delete(0, END)
         self.entrada_nome.delete(0, END)
         self.entrada_cpf.delete(0, END)
         self.entrada_email.delete(0, END)

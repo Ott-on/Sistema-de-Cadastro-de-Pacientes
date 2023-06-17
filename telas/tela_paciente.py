@@ -10,8 +10,6 @@ class Pacientes(tk.Frame):
         tk.Frame.__init__(self, parent)
         self.configure(bg='#242323')
 
-        print("pacientes=============>")
-
         sistema_pacientes = SistemaPacientes()
         self.pacientes = sistema_pacientes.obter_pacientes()
 
@@ -25,7 +23,6 @@ class Pacientes(tk.Frame):
 
         # botão pesquisar:
         img2 = PhotoImage(file='imagens/pesquisar.png')
-        print(self.pacientes)
         button_image = Button(self, image=img2, bg='#02bae8', fg='#02bae8', activebackground='#02bae8', command=lambda: self.pesquisar(sistema_pacientes, controller),
                               relief='solid', overrelief='solid', borderwidth=0, highlightthickness=0)
         button_image.image = img2
@@ -94,18 +91,22 @@ class Pacientes(tk.Frame):
                 print("Atender:", item["values"])
 
         def alterar():
+            from telas.paciente_cadastro import cadastrarPacientes
             # Lógica para alterar
             selected_item = self.treeview.selection()
             if selected_item:
                 item = self.treeview.item(selected_item)
-                print("Alterar:", item["values"])
+                controller.carregar_tela(
+                    cadastrarPacientes, {"modo": "alterar", "paciente_alterar": item["values"]})
 
         def excluir():
             # Lógica para excluir
             selected_item = self.treeview.selection()
             if selected_item:
                 item = self.treeview.item(selected_item)
-                print("Excluir:", item["values"])
+                sistema_pacientes.remover(
+                    cpf=item["values"][0], nome=item["values"][1])
+                controller.carregar_tela(Pacientes)
 
         frame = tk.Frame(self)
         frame.place(x=400, y=95)

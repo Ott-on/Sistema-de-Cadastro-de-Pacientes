@@ -52,20 +52,21 @@ class SistemaPacientes:
         lido = pd.read_csv(self.arquivo_csv)
         print(lido)
 
-    def remover(self, paciente_selecionado):
+    def remover(self, cpf, nome):
+        # Lê o arquivo CSV dos pacientes
+        tabela_pacientes = pd.read_csv(self.arquivo_csv, sep=';')
 
-        # lê o arquivo csv dos pacientes
-        tabela_pacientes = pd.read_csv("dados/pacientes.csv")
+        # Procura as linhas dos pacientes com base no CPF e no nome
+        pacientes_procurados = tabela_pacientes.loc[
+            (tabela_pacientes['cpf'] == cpf) & (
+                tabela_pacientes['nome'] == nome)
+        ]
 
-        # procura a linha do paciente no arquivo
-        paciente_procurado = tabela_pacientes.loc[tabela_pacientes['Nome'] ==
-                                                  paciente_selecionado | tabela_pacientes['CPF'] == paciente_selecionado]
+        # Remove as linhas dos pacientes encontrados
+        tabela_pacientes = tabela_pacientes.drop(pacientes_procurados.index)
 
-        # retira a linha do arquivo
-        tabela_pacientes = tabela_pacientes.drop(paciente_procurado.index)
-
-        # substitui o arquivo antigo pelo arquivo sem o paciente
-        tabela_pacientes.to_csv('dados/pacientes.csv', index=False, sep=';')
+        # Substitui o arquivo antigo pelo arquivo sem os pacientes
+        tabela_pacientes.to_csv(self.arquivo_csv, index=False, sep=';')
 
     def alterar(self, paciente_selecionado, dado_para_alterar, novo_dado):
 
