@@ -18,7 +18,7 @@ class SistemaDoenca:
         for _, row in tabela_doencas.iterrows():
             doenca = (
                 row['cid'],
-                row['nome'],
+                row['nome_doenca'],
             )
             doencas.append(doenca)
         return doencas
@@ -31,45 +31,25 @@ class SistemaDoenca:
         }
 
         df = pd.DataFrame(dados)
-        df.to_csv("dados/doencas.csv", index=False,
+        df.to_csv(self.arquivo_csv, index=False,
                   sep=';', mode='a', header=False)
 
-        lido = pd.read_csv("dados/doencas.csv")
-        print(lido)
+    def remover(self, cid):
+        # Lê o arquivo CSV das doenças
+        tabela_doencas = pd.read_csv(self.arquivo_csv, sep=';')
 
-    def remover(self, doenca_selecionada):
+        # Procura as linhas das doenças com base no CID
+        doencas_procuradas = tabela_doencas.loc[tabela_doencas['cid'] == cid]
 
-        # lê o arquivo csv das doenças
-        tabela_doencas = pd.read_csv("dados/doencas.csv")
+        # Remove as linhas das doenças encontradas
+        tabela_doencas = tabela_doencas.drop(doencas_procuradas.index)
 
-        # procura a linha da doença no arquivo
-        doenca_procurada = tabela_doencas.loc[tabela_doencas['Nome'] ==
-                                              doenca_selecionada | tabela_doencas['CID'] == doenca_selecionada]
+        # Substitui o arquivo antigo pelo arquivo sem as doenças
+        tabela_doencas.to_csv(self.arquivo_csv, index=False, sep=';')
 
-        # retira a linha do arquivo
-        tabela_doencas = tabela_doencas.drop(doenca_procurada.index)
-
-        # substitui o arquivo antigo pelo arquivo sem a doença
-        tabela_doencas.to_csv('dados/doencas.csv', index=False, sep=';')
-
-    def alterar(self, doenca_selecionada, dado_para_alterar, novo_dado):
-
-        # lê o arquivo csv das doencas
-        tabela_doencas = pd.read_csv("dados/doencas.csv")
-
-        # procura a linha da doença no arquivo
-        doenca_procurada = tabela_doencas.loc[tabela_doencas['Nome'] ==
-                                              doenca_selecionada | tabela_doencas['CID'] == doenca_selecionada]
-
-        # altera o dado especifico da linha
-        doenca_procurada.loc[doenca_procurada.index,
-                             dado_para_alterar] = novo_dado
-
-        # coloca o novo dado no arquivo principal de doenças
-        tabela_doencas.loc[doenca_procurada.index] = doenca_procurada
-
-        # substitui a o arquivo antigo pelo arquivo alterado
-        tabela_doencas.to_csv('dados/doencas.csv', index=False, sep=';')
+    def alterar(self, cid, nome_doenca):
+        self.remover(cid=cid)
+        self.cadastrar(cid=cid, nome_doenca=nome_doenca)
 
     def consultar(self, buscador):
         # Converter o buscador para string
@@ -78,15 +58,16 @@ class SistemaDoenca:
         # lê o arquivo csv dos doencas
         tabela_doencas = pd.read_csv(self.arquivo_csv, sep=";")
 
-        # Verificar se o buscador é um CPF válido
-        if buscador.isalpha():
-            # Buscar pelo nome ou parte do nome (ignorando maiúsculas/minúsculas)
-            doencas_procuradas = tabela_doencas.loc[tabela_doencas['nome'].astype(
-                str).str.contains(buscador, case=False)]
+        procurado_pelo_nome = tabela_doencas.loc[tabela_doencas['nome_doenca'].astype(
+            str).str.contains(buscador, case=False)]
+
+        procurado_pelo_cid = tabela_doencas.loc[tabela_doencas['cid'].astype(
+            str).str.contains(buscador)]
+
+        if not procurado_pelo_nome.empty:
+            doencas_procuradas = procurado_pelo_nome
         else:
-            # Buscar pelo CID
-            doencas_procuradas = tabela_doencas.loc[tabela_doencas['cid'].astype(
-                str).str.contains(buscador)]
+            doencas_procuradas = procurado_pelo_cid
 
         # Se houver doencas encontrados, retorna as informações como uma lista de tuplas
         if not doencas_procuradas.empty:
@@ -94,7 +75,7 @@ class SistemaDoenca:
             for _, paciente in doencas_procuradas.iterrows():
                 paciente_info = (
                     paciente['cid'],
-                    paciente['nome'],
+                    paciente['nome_doenca'],
                 )
                 doencas_info.append(paciente_info)
 

@@ -21,8 +21,6 @@ class cadastrarPacientes(tk.Frame):
             self.modo = args[0]["modo"]
             self.paciente_alterar = args[0]["paciente_alterar"]
 
-        print(self.paciente_alterar)
-
         sistema_pacientes = SistemaPacientes()
 
         # retangulo azul da tela

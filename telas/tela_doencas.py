@@ -74,21 +74,22 @@ class DoencasListagem(tk.Frame):
         scrollbar.configure(command=self.treeview.yview)
 
         def alterar():
-            from telas.paciente_cadastro import cadastrarPacientes
+            from telas.cadastro_doenca import cadastrarDoencas
             # Lógica para alterar
             selected_item = self.treeview.selection()
             if selected_item:
                 item = self.treeview.item(selected_item)
                 controller.carregar_tela(
-                    cadastrarPacientes, {"modo": "alterar", "paciente_alterar": item["values"]})
+                    cadastrarDoencas, {"modo": "alterar", "doenca_alterar": item["values"]})
 
         def excluir():
             # Lógica para excluir
             selected_item = self.treeview.selection()
             if selected_item:
                 item = self.treeview.item(selected_item)
-                sistema_pacientes.remover(
-                    cpf=item["values"][0], nome=item["values"][1])
+                print(item["values"][0])
+                sistema_doenca.remover(
+                    cid=item["values"][0])
                 controller.carregar_tela(DoencasListagem)
 
         frame = tk.Frame(self)
@@ -121,7 +122,7 @@ class DoencasListagem(tk.Frame):
         else:
             self.treeview.delete(*self.treeview.get_children())
             messagebox.showinfo(
-                "Aviso!", "Paciente não encontrado!", icon="warning")
+                "Aviso!", "Doença não encontrada!", icon="warning")
 
     def voltar_menu(self, controller):
         from telas.menu_opcoes import MenuOpcoes

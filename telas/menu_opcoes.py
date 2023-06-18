@@ -2,6 +2,7 @@ import tkinter as tk
 from tkinter import RAISED, Button, Label, PhotoImage
 
 
+
 class MenuOpcoes(tk.Frame):
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
@@ -42,8 +43,8 @@ class MenuOpcoes(tk.Frame):
         controller.carregar_tela(Pacientes)
 
     def doencas(self, controller):
-        from telas.doencas_cadastradas import Doenca
-        controller.show_frame(Doenca)
+        from telas.tela_doencas import DoencasListagem
+        controller.carregar_tela(DoencasListagem)
 
     def relatorio(self, controller):
         from telas.relatorio import Relatorio
