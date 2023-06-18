@@ -130,7 +130,6 @@ class cadastrarPacientes(tk.Frame):
         if self.modo == 'alterar':
             # Pegando a data armazenada e formatando para gerar um datetime. ele vai fatiar a string da data e gerar uma list
             data_registrada_fatiada = self.paciente_alterar[5].split("/")
-            print(data_registrada_fatiada)
 
             # Atribuindo a data registrada ao DateEntry
             data_registrada = datetime.date(
@@ -148,8 +147,9 @@ class cadastrarPacientes(tk.Frame):
                     valores_entrada_sexo.index(valor_entrada_sexo_selecionado))
 
             valor_entrada_civil_selecionado = self.paciente_alterar[7]
-            if valor_entrada_civil_selecionado in valores_entrada_sexo:
-                entrada_sexo.current(
+
+            if valor_entrada_civil_selecionado in valores_entrada_civil:
+                entrada_civil.current(
                     valores_entrada_civil.index(valor_entrada_civil_selecionado))
 
             self.entrada_cpf.insert(0, self.paciente_alterar[0])
