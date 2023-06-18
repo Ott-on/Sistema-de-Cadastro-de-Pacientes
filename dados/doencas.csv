@@ -1,2 +1,51 @@
-Nome;CID
-aa;aa
+cid;nome
+A00;Cólera
+A09;Diarreia e gastroenterite de origem infecciosa presumível
+B20;Infecção pelo HIV
+C34;Câncer de pulmão
+D50;Anemia por deficiência de ferro
+E11;Diabetes mellitus tipo 2
+F32;Episódio depressivo
+G30;Doença de Alzheimer
+H25;Catarata
+I10;Hipertensão arterial
+J45;Asma
+K29;Gastrite
+L40;Psoríase
+M17;Artrose do joelho
+N18;Doença renal crônica
+O26;Atendimento pré-natal de rotina
+P07;Prematuridade
+Q21;Defeitos cardíacos congênitos
+R10;Dor abdominal e pélvica
+S52;Fratura do rádio e ulna
+T78;Reação adversa a medicamentos
+U07;COVID-19
+V01;Acidente de transporte com veículo a motor
+W55;Mordida de cachorro
+X09;Agredido por briga ou agressão
+Y40;Sobredosagem intencional de medicamentos
+Z23;Necessidade de imunização contra a influenza
+A15;Tuberculose respiratória
+B07;Vírus do herpes simples
+C50;Câncer de mama
+D62;Anemia em doenças crônicas
+E78;Dislipidemia
+F41;Transtornos de ansiedade
+G40;Epilepsia
+H40;Glaucoma
+I20;Angina pectoris
+J44;Doença pulmonar obstrutiva crônica
+K35;Apendicite
+L70;Acne
+M54;Dor nas costas
+N30;Cistite
+O60;Trabalho de parto prematuro
+P22;Asfixia ao nascer
+Q05;Espinha bífida
+R06;Anormalidades de batimento cardíaco e ritmo
+S72;Fratura do fêmur
+T81;Complicação de procedimento
+U06;Infecção por COVID-19 confirmada
+V09;Acidente de bicicleta
+W65;Afogamento e submersão acidental
