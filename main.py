@@ -1,5 +1,6 @@
 import tkinter as tk
 from tkinter import PhotoImage, ttk
+from telas.consultar_paciente import ConsultarPaciente
 
 from telas.login_medico import LoginMedico
 from telas.cadastro_medico import CadastroMedico
@@ -33,11 +34,11 @@ class tkinterApp(tk.Tk):
 
         self.create_frames()
 
-        self.show_frame(LoginMedico)
+        self.show_frame(ConsultarPaciente)
 
     def create_frames(self):
         # Cria as instâncias dos frames e armazena em um dicionário
-        for F in (LoginMedico, CadastroMedico, MenuOpcoes, Relatorio, cadastrarPacientes, cadastrarDoencas):
+        for F in (LoginMedico, CadastroMedico, MenuOpcoes, Relatorio, cadastrarPacientes, cadastrarDoencas, ConsultarPaciente):
             frame = F(self.container, self)
             self.frames[F] = frame
             frame.grid(row=0, column=0, sticky="nsew")

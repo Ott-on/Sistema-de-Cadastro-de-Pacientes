@@ -18,6 +18,7 @@ class cadastrarPacientes(tk.Frame):
         # Verificando se o modo é cadastro ou alterar
         if args:
             print("ENTRANDO NO MODO ALTERAR")
+            print(args)
             self.modo = args[0]["modo"]
             self.paciente_alterar = args[0]["paciente_alterar"]
 
@@ -130,6 +131,7 @@ class cadastrarPacientes(tk.Frame):
         if self.modo == 'alterar':
             # Pegando a data armazenada e formatando para gerar um datetime. ele vai fatiar a string da data e gerar uma list
             data_registrada_fatiada = self.paciente_alterar[5].split("/")
+            print(data_registrada_fatiada)
 
             # Atribuindo a data registrada ao DateEntry
             data_registrada = datetime.date(

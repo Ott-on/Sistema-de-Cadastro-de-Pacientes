@@ -3,6 +3,7 @@ from tkinter import RAISED, RIDGE, Button, Entry, Label, PhotoImage, Scrollbar, 
 from tkinter.ttk import Treeview
 from modelos.paciente import *
 from modelos.sistema_pacientes import SistemaPacientes
+from telas.consultar_paciente import ConsultarPaciente
 
 
 class Pacientes(tk.Frame):
@@ -83,6 +84,14 @@ class Pacientes(tk.Frame):
         self.treeview.configure(yscrollcommand=scrollbar.set)
         scrollbar.configure(command=self.treeview.yview)
 
+        def consultar():
+            # Lógica para atender
+            selected_item = self.treeview.selection()
+            if selected_item:
+                item = self.treeview.item(selected_item)
+                controller.carregar_tela(
+                    ConsultarPaciente, {"paciente": item["values"]})
+
         def atender():
             # Lógica para atender
             selected_item = self.treeview.selection()
@@ -114,7 +123,7 @@ class Pacientes(tk.Frame):
         botao_atender = tk.Button(frame, text="Atender", command=atender)
         botao_atender.pack(side="left", padx=2, pady=2)
 
-        botao_consultar = tk.Button(frame, text="Consultar", command=atender)
+        botao_consultar = tk.Button(frame, text="Consultar", command=consultar)
         botao_consultar.pack(side="left", padx=2, pady=2)
 
         botao_alterar = tk.Button(frame, text="Alterar", command=alterar)
