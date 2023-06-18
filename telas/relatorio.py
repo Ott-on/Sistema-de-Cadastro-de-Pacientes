@@ -1,93 +1,158 @@
 import tkinter as tk
 from tkinter import RAISED, RIDGE, Button, Entry, Label, PhotoImage, messagebox
 from modelos.paciente import *
-
+from modelos.sistema_pacientes import SistemaPacientes
+from tkinter.ttk import Treeview
+from tkcalendar import DateEntry
+import datetime
 
 class Relatorio(tk.Frame):
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
         self.configure(bg='#242323')
 
-        #retangulo azul da tela
+        sistema_pacientes = SistemaPacientes()
+        self.pacientes = sistema_pacientes.obter_pacientes()
+
+        # Criar a barra de rolagem
+        scrollbar = tk.Scrollbar(self)
+        scrollbar.place(x=972, y=150, height=446)
+
+        # retangulo azul da tela
         label_retangulo = Label(self, width=1000, height=4, bg='#02bae8')
         label_retangulo.place(x=0, y=0)
 
-        # Nome
-        entrada_nome = Entry(self,width=14, font=(
-            "Arial", 25), bg='#636262', highlightthickness=0.5, relief='solid')
-        entrada_nome.place(x=60, y=450)
+        # botão pesquisar:
+        img2 = PhotoImage(file='imagens/pesquisar.png')
+        button_image = Button(self, image=img2, bg='#02bae8', fg='#02bae8', activebackground='#02bae8',
+                              command=lambda: self.pesquisar(sistema_pacientes, controller),
+                              relief='solid', overrelief='solid', borderwidth=0, highlightthickness=0)
+        button_image.image = img2
+        button_image.place(x=920, y=10)
 
-        self.entrada_nome = entrada_nome
+        # entrada da pesquisa por dia ou periodo informado:
+        label_nascimento = Label(self, width=15, height=2, text='Dia:', font=(
+            "Arial", 10), bg='#02bae8', fg='#242323')
+        label_nascimento.place(x=110, y=6)
 
-        # CPF
-        entrada_cpf = Entry(self,width=14, font=(
-            "Arial", 25), bg='#636262', highlightthickness=0.5, relief='solid')
-        entrada_cpf.place(x=160, y=450)
-        
-        self.entrada_cpf = entrada_cpf
+        entrada_nascimento = DateEntry(self, width=12, background='#02bae8',
+                                       foreground='white', borderwidth=2, locale='pt_BR', date_pattern="dd/mm/yyyy")
+        entrada_nascimento.place(x=120, y=40)
 
-        # Email
-        entrada_email = Entry(self,width=14, font=(
-            "Arial", 25), bg='#636262', highlightthickness=0.5, relief='solid')
-        entrada_email.place(x=260, y=450)
+        self.entrada_nascimento = entrada_nascimento
 
-        self.entrada_email = entrada_email
+        # Colocando para começar em 30 01 1995 o DateEntry
+        data_padrao = datetime.date(1995, 1, 30)
+        self.entrada_nascimento.set_date(data_padrao)
 
-        # Celular
-        entrada_celular = Entry(self,width=14, font=(
-            "Arial", 25), bg='#636262', highlightthickness=0.5, relief='solid')
-        entrada_celular.place(x=360, y=450)
+        # entrada da pesquisa por código CID:
+        label_cid = Label(self, width=15, height=2, text='Código CID:', font=(
+            "Arial", 10), bg='#02bae8', fg='#242323')
+        label_cid.place(x=310, y=12)
 
-        self.entrada_celular = entrada_celular
+        entrada_cid = Entry(self, width=10, font=(
+            "Arial", 25), bg='#636262', highlightthickness=0, relief='solid')
+        entrada_cid.place(x=420, y=10)
 
-        # Telefone
-        entrada_telefone = Entry(self,width=14, font=(
-            "Arial", 25), bg='#636262', highlightthickness=0.5, relief='solid')
-        entrada_telefone.place(x=460, y=450)
+        # entrada da pesquisa por nome/cpf:
+        label_nome_cpf = Label(self, width=15, height=2, text='Nome/CPF:', font=(
+            "Arial", 10), bg='#02bae8', fg='#242323')
+        label_nome_cpf.place(x=615, y=12)
 
-        self.entrada_telefone = entrada_telefone
+        entrada_pesquisa = Entry(self, width=10, font=(
+            "Arial", 25), bg='#636262', highlightthickness=0, relief='solid')
+        entrada_pesquisa.place(x=720, y=10)
 
-        # Data de Nascimento
-        
-        # Sexo
-        entrada_sexo = Entry(self,width=14, font=(
-            "Arial", 25), bg='#636262', highlightthickness=0.5, relief='solid')
-        entrada_sexo.place(x=560, y=450)
+        # Adicionando um ouvinte de evento que quando digitamos algo chama essa função
+        entrada_pesquisa.bind(
+            '<KeyRelease>', lambda event: self.__verificar_campo_pesquisa())
 
-        self.entrada_sexo = entrada_sexo
+        self.entrada_nascimento = entrada_nascimento
+        self.entrada_cid = entrada_cid
+        self.entrada_pesquisa = entrada_pesquisa
 
-        # Estado Civil
-        entrada_civil = Entry(self,width=14, font=(
-            "Arial", 25), bg='#636262', highlightthickness=0.5, relief='solid')
-        entrada_civil.place(x=660, y=450)
+        entrada_nascimento.bind(
+            '<KeyRelease>', lambda event: self.__verificar_campo_pesquisa())
+        entrada_cid.bind(
+            '<KeyRelease>', lambda event: self.__verificar_campo_pesquisa())
+        entrada_pesquisa.bind(
+            '<KeyRelease>', lambda event: self.__verificar_campo_pesquisa())
 
-        self.entrada_civil = entrada_civil
+
+        # Voltar
         img = PhotoImage(file='imagens/voltar_label.png')
-        button_image = Button(self, image=img, bg='#02bae8', fg='#02bae8', activebackground='#02bae8', command=lambda: self.voltar_menu(
-            controller), relief='solid', overrelief='solid', borderwidth=0, highlightthickness=0)
+        button_image = Button(self, image=img, bg='#02bae8', fg='#02bae8', activebackground='#02bae8',
+                              command=lambda: self.voltar_menu(
+                                  controller), relief='solid', overrelief='solid', borderwidth=0, highlightthickness=0)
         button_image.image = img
-        button_image.place(x=10, y=10)  
+        button_image.place(x=10, y=10)
+
+
+        # opções
+        label_selecionar_paciente = Label(self, width=30, height=2, text='Relatório dos pacientes classificados:', font=(
+            "Arial", 18), bg='#242323', fg='#888a89')
+        label_selecionar_paciente.place(x=10, y=80)
+
+        self.treeview = Treeview(self, columns=(
+            "CPF", "Nome", "Email", "Telefone", "Celular", "Data_Nascimento", "Sexo", "Estado_Civil"), height=21,
+                                 show="headings")
+
+        self.treeview.column("CPF", width=100)
+        self.treeview.column("Email", width=150)
+        self.treeview.column("Telefone", width=120)
+        self.treeview.column("Celular", width=110)
+        self.treeview.column("Data_Nascimento", width=120)
+        self.treeview.column("Estado_Civil", width=80)
+        self.treeview.column("Sexo", width=80)
+
+        # Definir as colunas
+        self.treeview.heading("CPF", text="CPF")
+        self.treeview.heading("Nome", text="Nome")
+        self.treeview.heading("Email", text="Email")
+        self.treeview.heading("Telefone", text="Telefone")
+        self.treeview.heading("Celular", text="Celular")
+        self.treeview.heading("Data_Nascimento", text="Data de Nascimento")
+        self.treeview.heading("Sexo", text="Sexo")
+        self.treeview.heading("Estado_Civil", text="Estado Civil")
+
+        self.treeview.place(x=10, y=150)
+
+        for dado in self.pacientes:
+            self.treeview.insert("", "end", values=dado)
+
+        self.treeview.configure(yscrollcommand=scrollbar.set)
+        scrollbar.configure(command=self.treeview.yview)
+
+    # função que verifica se o campo de pesquisa esta vazio caso esteja ele carrega todos os pacientes
+
+    def __verificar_campo_pesquisa(self):
+        if len(self.entrada_nascimento.get()) == 0 or len(self.entrada_cid.get()) == 0 or len(self.entrada_pesquisa.get()) == 0:
+            self.treeview.delete(*self.treeview.get_children())
+            for dado in self.pacientes:
+                self.treeview.insert("", "end", values=dado)
+
+    def pesquisar(self, sistema_pacientes: SistemaPacientes, controller):
+
+        periodo_selecionado = self.entrada_nascimento
+        doenca_selecionado = self.entrada_cid.get()
+        paciente_selecionado = self.entrada_pesquisa.get()
+
+        pacientes_encontrados = sistema_pacientes.consultar(
+            buscador=paciente_selecionado)
+
+        if pacientes_encontrados:
+            self.treeview.delete(*self.treeview.get_children())
+            for dado in pacientes_encontrados:
+                self.treeview.insert("", "end", values=dado)
+        else:
+            self.treeview.delete(*self.treeview.get_children())
+            messagebox.showinfo(
+                "Aviso!", "Paciente não encontrado!", icon="warning")
 
     def voltar_menu(self, controller):
         from telas.menu_opcoes import MenuOpcoes
         controller.show_frame(MenuOpcoes)
-        
-    def fazer_cadastro(self):
-        nome = self.entrada_nome.get()
-        cpf = self.entrada_cpf.get()
-        email = self.entrada_email.get()
-        telefone = self.entrada_telefone.get()
-        celular = self.entrada.celular.get()
-        nascimento = self.entrada_nascimento.get()
-        sexo = self.entrada_sexo.get()
-        civil = self.entrada_civil.get()
 
-        # Aqui verificamos se os campos foram preenchidos caso não deve mostrar um erro pedindo para preencher os campos
-        if cpf.isdigit() and len(cpf) == 11 and telefone.isalpha() and celular.isalpha() and len(nascimento) != 0 and sexo.isalpha() and civil.isalpha():
-            print('ok')
-            Paciente(nome, cpf, email, telefone, celular, nascimento, sexo, civil)
-
-        else:
-            # Aqui exibimos um popup de aviso pedindo para os campos serem preenchidos
-            messagebox.showinfo(
-                "Aviso!", "Preencha os campos para continuar", icon="warning")
+    def cadastrar_pacientes(self, controller):
+        from telas.paciente_cadastro import cadastrarPacientes
+        controller.show_frame(cadastrarPacientes)
