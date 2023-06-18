@@ -9,7 +9,7 @@ from telas.relatorio import Relatorio
 from telas.tela_paciente import Pacientes
 from telas.paciente_cadastro import cadastrarPacientes
 from telas.cadastro_doenca import cadastrarDoencas
-
+from telas.registro_atendimento import RegistrarPacientes
 LARGEFONT = ("Verdana", 35)
 
 
@@ -38,7 +38,7 @@ class tkinterApp(tk.Tk):
 
     def create_frames(self):
         # Cria as instâncias dos frames e armazena em um dicionário
-        for F in (LoginMedico, CadastroMedico, MenuOpcoes, Relatorio, cadastrarPacientes, cadastrarDoencas, ConsultarPaciente):
+        for F in (LoginMedico, CadastroMedico, MenuOpcoes, Relatorio, cadastrarPacientes, cadastrarDoencas, ConsultarPaciente, RegistrarPacientes):
             frame = F(self.container, self)
             self.frames[F] = frame
             frame.grid(row=0, column=0, sticky="nsew")
