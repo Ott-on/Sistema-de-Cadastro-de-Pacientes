@@ -130,7 +130,7 @@ class Relatorio(tk.Frame):
             self.treeview.delete(*self.treeview.get_children())
             for dado in self.pacientes:
                 self.treeview.insert("", "end", values=dado)
-
+        
     def pesquisar(self, sistema_pacientes: SistemaPacientes, controller):
 
         periodo_selecionado = self.entrada_nascimento
