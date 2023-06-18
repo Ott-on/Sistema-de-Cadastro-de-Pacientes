@@ -6,7 +6,6 @@ from telas.cadastro_medico import CadastroMedico
 from telas.menu_opcoes import MenuOpcoes
 from telas.relatorio import Relatorio
 from telas.tela_paciente import Pacientes
-from telas.doencas_cadastradas import Doenca
 from telas.paciente_cadastro import cadastrarPacientes
 from telas.cadastro_doenca import cadastrarDoencas
 
