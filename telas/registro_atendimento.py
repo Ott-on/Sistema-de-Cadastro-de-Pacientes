@@ -12,6 +12,23 @@ class RegistrarPacientes(tk.Frame):
         label_retangulo = Label(self, width=1000, height=4, bg='#02bae8')
         label_retangulo.place(x=0, y=0) 
 
+        # Nome do paciente
+        label_nome = Label(self, width=15, height=2, text='Nome do paciente:', font=(
+            "Arial", 12), bg='#02bae8', fg='#242323')
+        label_nome.place(x=100, y=12)
+
+        label_nome_escrito = Label(self, width=35, height=2, text='', bg='white')
+        label_nome_escrito.place(x=240, y=13)
+
+        # Cpf do paciente
+        label_cpf = Label(self, width=5, height=2, text='CPF:', font=(
+            "Arial", 12), bg='#02bae8', fg='#242323')
+        label_cpf.place(x=505, y=12)
+
+        label_cpf_escrito = Label(self, width=35, height=2, text='', bg='white')
+        label_cpf_escrito.place(x=555, y=13)
+
+
         # Peso
         entrada_peso = Entry(self, width=10, font=(
             "Arial", 25), bg='#636262', highlightthickness=0.5, relief='solid')
