@@ -68,23 +68,10 @@ class SistemaPacientes:
         # Substitui o arquivo antigo pelo arquivo sem os pacientes
         tabela_pacientes.to_csv(self.arquivo_csv, index=False, sep=';')
 
-    def alterar(self, paciente_selecionado, dado_para_alterar, novo_dado):
+    def alterar(self, cpf, nome, paciente: Paciente):
 
-        # lê o arquivo csv dos pacientes
-        tabela_pacientes = pd.read_csv("dados/pacientes.csv")
-
-        # procura a linha do paciente no arquivo
-        paciente_procurado = tabela_pacientes.loc[tabela_pacientes['Nome'] ==
-                                                  paciente_selecionado | tabela_pacientes['CPF'] == paciente_selecionado]
-
-        # altera o dado especifico da linha
-        paciente_procurado.loc[paciente_procurado.index,
-                               dado_para_alterar] = novo_dado
-        # coloca o novo dado no arquivo principal de pacientes
-        tabela_pacientes.loc[paciente_procurado.index] = paciente_procurado
-
-        # substitui a o arquivo antigo pelo arquivo alterado
-        tabela_pacientes.to_csv(self.arquivo_csv, index=False, sep=';')
+        self.remover(cpf, nome)
+        self.cadastrar(paciente)
 
     def consultar(self, buscador):
         # Converter o buscador para string

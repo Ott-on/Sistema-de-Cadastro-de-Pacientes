@@ -172,9 +172,17 @@ class cadastrarPacientes(tk.Frame):
                             print('Tudo ok!')
                             paciente = Paciente(nome, cpf, email, telefone,
                                                 celular, nascimento_formatado, sexo, civil)
-                            sistema_pacientes.cadastrar(paciente)
-                            messagebox.showinfo(
-                                "Sucesso!", "Paciente cadastrado com sucesso!")
+                            if self.modo == 'alterar':
+                                sistema_pacientes.alterar(
+                                    self.paciente_alterar[0], self.paciente_alterar[1], paciente)
+                                self.voltar(controller)
+
+                                messagebox.showinfo(
+                                    "Sucesso!", "Paciente alterado com sucesso!")
+                            else:
+                                sistema_pacientes.cadastrar(paciente)
+                                messagebox.showinfo(
+                                    "Sucesso!", "Paciente cadastrado com sucesso!")
                             self.limpar_campos()
                         else:
                             messagebox.showinfo(
