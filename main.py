@@ -37,7 +37,7 @@ class tkinterApp(tk.Tk):
 
     def create_frames(self):
         # Cria as instâncias dos frames e armazena em um dicionário
-        for F in (LoginMedico, CadastroMedico, MenuOpcoes, Relatorio, Pacientes, Doenca, cadastrarPacientes, cadastrarDoencas):
+        for F in (LoginMedico, CadastroMedico, MenuOpcoes, Relatorio, cadastrarPacientes, cadastrarDoencas):
             frame = F(self.container, self)
             self.frames[F] = frame
             frame.grid(row=0, column=0, sticky="nsew")
