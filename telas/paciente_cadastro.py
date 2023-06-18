@@ -1,3 +1,4 @@
+import datetime
 import tkinter as tk
 from tkinter.ttk import Combobox
 from tkcalendar import DateEntry
@@ -14,13 +15,11 @@ class cadastrarPacientes(tk.Frame):
         self.modo = "cadastrar"
         self.paciente_alterar = {}
 
+        # Verificando se o modo é cadastro ou alterar
         if args:
             print("ENTRANDO NO MODO ALTERAR")
             self.modo = args[0]["modo"]
             self.paciente_alterar = args[0]["paciente_alterar"]
-
-        else:
-            print("NOO")
 
         print(self.paciente_alterar)
 
@@ -82,7 +81,7 @@ class cadastrarPacientes(tk.Frame):
 
         # Data de Nascimento
         entrada_nascimento = DateEntry(self, width=12, background='#02bae8',
-                                       foreground='white', borderwidth=2, locale='pt_BR')
+                                       foreground='white', borderwidth=2, locale='pt_BR', date_pattern="dd/mm/yyyy")
         entrada_nascimento.place(x=430, y=500)
         label_nascimento = Label(self, width=15, height=2, text='Data de Nascimento:', font=(
             "Arial", 10), bg='#242323', fg='#888a89')
@@ -125,15 +124,41 @@ class cadastrarPacientes(tk.Frame):
 
         button_cadastrar.place(x=700, y=450)
 
+        # Colocando para começar em 30 01 1995 o DateEntry de data de nascimento
+        data_padrao = datetime.date(1995, 1, 30)
+        self.entrada_nascimento.set_date(data_padrao)
+
         # Se caso o modo for alterar pegue os dados que está no paciente alterar e preencha os campos
         if self.modo == 'alterar':
-            self.entrada_nome.insert(0, self.paciente_alterar[1])
+            # Pegando a data armazenada e formatando para gerar um datetime. ele vai fatiar a string da data e gerar uma list
+            data_registrada_fatiada = self.paciente_alterar[5].split("/")
+            print(data_registrada_fatiada)
+
+            # Atribuindo a data registrada ao DateEntry
+            data_registrada = datetime.date(
+                int(data_registrada_fatiada[2]), int(data_registrada_fatiada[1]), int(data_registrada_fatiada[0]))
+            self.entrada_nascimento.set_date(data_registrada)
+
+            # Pegos os valores dos Combobox
+            valores_entrada_sexo = entrada_sexo['values']
+            valores_entrada_civil = entrada_civil['values']
+
+            # Atribui o valor para a Combobox de entrada sexo
+            valor_entrada_sexo_selecionado = self.paciente_alterar[6]
+            if valor_entrada_sexo_selecionado in valores_entrada_sexo:
+                entrada_sexo.current(
+                    valores_entrada_sexo.index(valor_entrada_sexo_selecionado))
+
+            valor_entrada_civil_selecionado = self.paciente_alterar[7]
+            if valor_entrada_civil_selecionado in valores_entrada_sexo:
+                entrada_sexo.current(
+                    valores_entrada_civil.index(valor_entrada_civil_selecionado))
+
             self.entrada_cpf.insert(0, self.paciente_alterar[0])
+            self.entrada_nome.insert(0, self.paciente_alterar[1])
             self.entrada_email.insert(0, self.paciente_alterar[2])
             self.entrada_telefone.insert(0, self.paciente_alterar[3])
             self.entrada_celular.insert(0, self.paciente_alterar[4])
-            self.entrada_sexo.insert(0, self.paciente_alterar[5])
-            self.entrada_civil.insert(0, self.paciente_alterar[6])
 
     def voltar(self, controller):
         from telas.tela_paciente import Pacientes
@@ -156,12 +181,10 @@ class cadastrarPacientes(tk.Frame):
         email = self.entrada_email.get()
         telefone = self.entrada_telefone.get()
         celular = self.entrada_celular.get()
-        nascimento = str(self.entrada_nascimento.get_date()).split("-")
+        nascimento = str(
+            self.entrada_nascimento.get_date().strftime("%d/%m/%Y"))
         sexo = self.entrada_sexo.get()
         civil = self.entrada_civil.get()
-
-        # formatando a data de nascimento para o formato dd/mm/aaaa
-        nascimento_formatado = f"{nascimento[2]}/{nascimento[1]}/{nascimento[0]}"
 
         # fazendo validação dos campos
         if nome and cpf and email and telefone and celular and nascimento and sexo and civil:
@@ -169,9 +192,10 @@ class cadastrarPacientes(tk.Frame):
                 if "@" in email:
                     if len(telefone) == 11:
                         if len(telefone) == 11:
-                            print('Tudo ok!')
+                            # Se tudo estiver ok ira criar a instancia do paciente.
                             paciente = Paciente(nome, cpf, email, telefone,
-                                                celular, nascimento_formatado, sexo, civil)
+                                                celular, nascimento, sexo, civil)
+                            # aqui verificamos o modo da nossa tela
                             if self.modo == 'alterar':
                                 sistema_pacientes.alterar(
                                     self.paciente_alterar[0], self.paciente_alterar[1], paciente)
