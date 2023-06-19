@@ -1,21 +1,25 @@
+# importações das bibliotecas usadas na tela de relatorio
 import tkinter as tk
-from tkinter import RAISED, RIDGE, Button, Entry, Label, PhotoImage, messagebox
+from tkinter import Button, Entry, Label, PhotoImage, messagebox
 from modelos.paciente import *
-from modelos.sistema_pacientes import SistemaPacientes
 from tkinter.ttk import Treeview
 from tkcalendar import DateEntry
-import datetime
+
+from modelos.sistema_relatorio import SistemaRelatorios
 
 
 class Relatorio(tk.Frame):
     def __init__(self, parent, controller):
+        """
+        Construtor da classe Relatorio.
+        """
         tk.Frame.__init__(self, parent)
         self.configure(bg='#242323')
 
         print('ded')
 
-        sistema_pacientes = SistemaPacientes()
-        self.pacientes = sistema_pacientes.obter_pacientes()
+        sistema_relatorio = SistemaRelatorios()
+        self.todos_atendimentos = sistema_relatorio.obter_todos_atendimentos()
 
         # Criar a barra de rolagem
         scrollbar = tk.Scrollbar(self)
@@ -29,7 +33,7 @@ class Relatorio(tk.Frame):
         img2 = PhotoImage(file='imagens/pesquisar.png')
         button_image = Button(self, image=img2, bg='#02bae8', fg='#02bae8', activebackground='#02bae8',
                               command=lambda: self.pesquisar(
-                                  sistema_pacientes, controller),
+                                  sistema_relatorio),
                               relief='solid', overrelief='solid', borderwidth=0, highlightthickness=0)
         button_image.image = img2
         button_image.place(x=920, y=10)
@@ -63,14 +67,18 @@ class Relatorio(tk.Frame):
             "Arial", 25), bg='#636262', highlightthickness=0, relief='solid')
         entrada_pesquisa.place(x=720, y=10)
 
-        # Adicionando um ouvinte de evento que quando digitamos algo chama essa função
-
+        '''
+        Essas linhas atribuem os objetos de entrada de dados (entrada_nascimento, 
+        entrada_cid e entrada_pesquisa) aos atributos correspondentes da instância atual 
+        da classe Relatorio (self.entrada_nascimento, self.entrada_cid e self.entrada_pesquisa). 
+        Isso permite acessar esses objetos posteriormente em outros métodos da classe, 
+        garantindo que as informações inseridas pelo usuário possam ser utilizadas quando necessário.
+        '''
         self.entrada_nascimento = entrada_nascimento
         self.entrada_cid = entrada_cid
         self.entrada_pesquisa = entrada_pesquisa
 
-        entrada_nascimento.bind(
-            '<KeyRelease>', lambda event: self.__verificar_campo_pesquisa())
+        # Adicionando um ouvinte de evento que quando digitamos algo chama essa função
         entrada_cid.bind(
             '<KeyRelease>', lambda event: self.__verificar_campo_pesquisa())
         entrada_pesquisa.bind(
@@ -89,72 +97,87 @@ class Relatorio(tk.Frame):
             "Arial", 18), bg='#242323', fg='#888a89')
         label_selecionar_paciente.place(x=10, y=80)
 
+        # CPF | Data de Atendimento | codigo CID | Nome
+
         self.treeview = Treeview(self, columns=(
-            "CPF", "Nome", "Email", "Telefone", "Celular", "Data_Nascimento", "Sexo", "Estado_Civil"), height=21,
+            "CPF", "Data_Atendimento", "Código_CID", "Nome",), height=21,
             show="headings")
 
-        self.treeview.column("CPF", width=100)
-        self.treeview.column("Email", width=150)
-        self.treeview.column("Telefone", width=120)
-        self.treeview.column("Celular", width=110)
-        self.treeview.column("Data_Nascimento", width=120)
-        self.treeview.column("Estado_Civil", width=80)
-        self.treeview.column("Sexo", width=80)
+        self.treeview.column("CPF", width=200)
+        self.treeview.column("Data_Atendimento", width=250)
+        self.treeview.column("Código_CID", width=230)
+        self.treeview.column("Nome", width=280)
 
         # Definir as colunas
         self.treeview.heading("CPF", text="CPF")
-        self.treeview.heading("Nome", text="Nome")
-        self.treeview.heading("Email", text="Email")
-        self.treeview.heading("Telefone", text="Telefone")
-        self.treeview.heading("Celular", text="Celular")
-        self.treeview.heading("Data_Nascimento", text="Data de Nascimento")
-        self.treeview.heading("Sexo", text="Sexo")
-        self.treeview.heading("Estado_Civil", text="Estado Civil")
+        self.treeview.heading("Data_Atendimento", text="Data de Atendimento")
+        self.treeview.heading("Código_CID", text="Código CID")
+        self.treeview.heading("Nome", text="Nome do Paciente")
 
         self.treeview.place(x=10, y=150)
 
-        # Data | codigo CID | Nome | Telefone | celular | sexo
-
-        for dado in self.pacientes:
+        for dado in self.todos_atendimentos:
             self.treeview.insert("", "end", values=dado)
 
         self.treeview.configure(yscrollcommand=scrollbar.set)
         scrollbar.configure(command=self.treeview.yview)
 
-    # função que verifica se o campo de pesquisa esta vazio caso esteja ele carrega todos os pacientes
-
     def __verificar_campo_pesquisa(self):
-        if len(self.entrada_nascimento.get()) == 0 and len(self.entrada_cid.get()) == 0 and len(self.entrada_pesquisa.get()) == 0:
+        """
+        Verifica se os campos de pesquisa estão vazios e exibe todos os registros de atendimento se for o caso.
+        """
+        if len(self.entrada_cid.get()) == 0 and len(self.entrada_pesquisa.get()) == 0:
             self.treeview.delete(*self.treeview.get_children())
-            for dado in self.pacientes:
+            for dado in self.todos_atendimentos:
                 self.treeview.insert("", "end", values=dado)
 
-    def pesquisar(self, sistema_pacientes: SistemaPacientes, controller):
-
+    def pesquisar(self, sistema_relatorio: SistemaRelatorios):
+        """
+        Realiza a pesquisa com base nos critérios fornecidos e exibe os resultados na Treeview.
+        :param sistema_relatorio: Instância do objeto SistemaRelatorios.
+        :param controller: Objeto do controlador da GUI.
+        """
         # Obtendo os valores selecionados
         periodo_selecionado = self.entrada_nascimento.get()
-        doenca_selecionado = self.entrada_cid.get()
-        paciente_selecionado = self.entrada_pesquisa.get()
+        codigo_cid = self.entrada_cid.get()
+        paciente_cpf_ou_nome = self.entrada_pesquisa.get()
 
-        # Criando um dicionário com os critérios de busca
-        buscador = {
-            'periodo': periodo_selecionado,
-            'doenca': doenca_selecionado,
-            'paciente': paciente_selecionado
-        }
+        resultado = []
 
-        # Chamando o método consultar do sistema de pacientes com o buscador
-        pacientes_encontrados = sistema_pacientes.consultar(buscador=buscador)
+        # verificando qual está preenchido
+        if periodo_selecionado and not codigo_cid and not paciente_cpf_ou_nome:
+            resultado = sistema_relatorio.listar_atendimentos_pelo_calendario(
+                dia_mes_ano=periodo_selecionado)
+        else:
+            if codigo_cid and not paciente_cpf_ou_nome:
+                resultado = sistema_relatorio.listar_atendimentos_pelo_codigo_cid(
+                    codigo_cid=codigo_cid)
+            else:
+                resultado = sistema_relatorio.listar_atendimentos_pelo_nome_ou_cpf(
+                    nome_ou_cpf=paciente_cpf_ou_nome)
 
-        if pacientes_encontrados:
-            self.treeview.delete(*self.treeview.get_children())
-            for dado in pacientes_encontrados:
+        # Limpar a Treeview antes de exibir os resultados
+        self.treeview.delete(*self.treeview.get_children())
+
+        # Exibir os resultados na Treeview, se houver
+        if resultado:
+            for dado in resultado:
                 self.treeview.insert("", "end", values=dado)
         else:
-            self.treeview.delete(*self.treeview.get_children())
+            # Exibir todos os registros de atendimento se nenhum resultado for encontrado
+            for dado in self.todos_atendimentos:
+                self.treeview.insert("", "end", values=dado)
             messagebox.showinfo(
-                "Aviso!", "Paciente não encontrado!", icon="warning")
+                "Aviso!",
+                "O sistema não identificou nenhum registro de atendimento com base nas informações fornecidas. "
+                "Por favor, verifique os dados inseridos e tente novamente.",
+                icon="warning"
+            )
 
     def voltar_menu(self, controller):
+        """
+        Retorna ao menu de opções.
+        :param controller: Objeto do controlador da GUI.
+        """
         from telas.menu_opcoes import MenuOpcoes
         controller.show_frame(MenuOpcoes)

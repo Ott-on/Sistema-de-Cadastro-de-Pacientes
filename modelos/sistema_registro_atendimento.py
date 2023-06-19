@@ -76,6 +76,7 @@ class SistemaAtendimento:
             "diagnostico_medico": [atendimento.diagnostico_medico],
             "codigo_cid": [atendimento.codigo_cid],
             "tratamento_ou_medicamentos_prescritos": [atendimento.tratamento_ou_medicamentos_prescritos],
+            "nome_paciente": [atendimento.nome_paciente]
         }
 
         df = pd.DataFrame(dados)

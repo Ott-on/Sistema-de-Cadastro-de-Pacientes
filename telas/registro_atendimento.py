@@ -177,7 +177,8 @@ class RegistrarAtendimento(tk.Frame):
                                   exames_passados=exames_passados,
                                   diagnostico_medico=diagnostico_medico,
                                   codigo_cid=codigo_cid,
-                                  tratamento_ou_medicamentos_prescritos=tratamento_ou_medicamentos_prescritos,)
+                                  tratamento_ou_medicamentos_prescritos=tratamento_ou_medicamentos_prescritos,
+                                  nome_paciente=self.paciente_dados[1])
 
         sistema_registro_atendimento.registrar(atendimento=atendimento)
 
