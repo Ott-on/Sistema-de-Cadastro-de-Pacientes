@@ -4,6 +4,7 @@ from tkinter.ttk import Treeview
 from modelos.paciente import *
 from modelos.sistema_doencas import SistemaDoenca
 from modelos.sistema_pacientes import SistemaPacientes
+from modelos.sistema_registro_atendimento import SistemaAtendimento
 
 
 class ConsultarPaciente(tk.Frame):
@@ -12,14 +13,16 @@ class ConsultarPaciente(tk.Frame):
         self.configure(bg='#242323')
 
         self.paciente_dados = {}
+        self.acessado_pela_tela = "pacientes"
+        self.registro_atendimentos = []
+
+        sistema_registro_atendimento = SistemaAtendimento()
 
         if args:
             self.paciente_dados = args[0]["paciente"]
-
-        print(self.paciente_dados)
-
-        sistema_doenca = SistemaDoenca()
-        self.doencas_obtidas = sistema_doenca.obter_doencas()
+            self.acessado_pela_tela = args[0]["acessado_pela_tela"]
+            self.registro_atendimentos = sistema_registro_atendimento.consultar_registros(
+                cpf=self.paciente_dados[0])
 
         # Criar a barra de rolagem
         scrollbar = tk.Scrollbar(self)
@@ -35,10 +38,11 @@ class ConsultarPaciente(tk.Frame):
         button_image.image = img
         button_image.place(x=10, y=10)
 
-        # botão cadastrar:
-        button_atender = Button(self, text='ATENDER', font=("Arial", 16), activebackground='gray', bg='grey',
-                                fg='white',  relief='solid', overrelief='solid', width=10, height=2, borderwidth=0, highlightthickness=0)
-        button_atender.place(x=850, y=2)
+        # # botão cadastrar:
+        # if self.acessado_pela_tela == "pacientes":
+        #     button_atender = Button(self, text='ATENDER', font=("Arial", 16), activebackground='gray', bg='grey',
+        #                             fg='white',  relief='solid', overrelief='solid', width=10, height=2, borderwidth=0, highlightthickness=0)
+        #     button_atender.place(x=850, y=2)
 
         label_nome_paciente = Label(self, width=15, height=2, justify="center", bg='#242323', text='Nome do paciente:', font=(
             "Arial", 16), fg='#888a89')
@@ -49,12 +53,12 @@ class ConsultarPaciente(tk.Frame):
             "Arial", 20), fg='#888a89')
         label_nome_paciente_dado.place(x=10, y=120)
 
-        cpf_paciente = self.paciente_dados[0] if self.paciente_dados else "Não setado"
-        label_cpf_paciente = Label(self, width=15, height=2, justify="center", bg='#242323', text=cpf_paciente, font=(
+        label_cpf_paciente = Label(self, width=15, height=2, justify="center", bg='#242323', text='CPF do paciente:', font=(
             "Arial", 16), fg='#888a89')
         label_cpf_paciente.place(x=450, y=80)
 
-        label_cpf_paciente_dado = Label(self, width=30, justify="center", anchor="w",  height=1, bg='#242323', text='123.456.789-10', font=(
+        cpf_paciente = self.paciente_dados[0] if self.paciente_dados else "Não setado"
+        label_cpf_paciente_dado = Label(self, width=30, justify="center", anchor="w",  height=1, bg='#242323', text=cpf_paciente, font=(
             "Arial", 20), fg='#888a89')
         label_cpf_paciente_dado.place(x=450, y=120)
 
@@ -78,12 +82,9 @@ class ConsultarPaciente(tk.Frame):
 
         self.treeview.place(x=10, y=300)
 
-        dados = [
-            ('23:25', "23/02/2023")
-        ]
-
-        for dado in dados:
-            self.treeview.insert("", "end", values=dado)
+        for dado in self.registro_atendimentos:
+            novo_dado = (dado[2], dado[1], *dado)
+            self.treeview.insert("", "end", values=novo_dado)
 
         self.treeview.configure(yscrollcommand=scrollbar.set)
         scrollbar.configure(command=self.treeview.yview)
@@ -93,6 +94,7 @@ class ConsultarPaciente(tk.Frame):
             selected_item = self.treeview.selection()
             if selected_item:
                 item = self.treeview.item(selected_item)
+                print(item["values"])
                 # controller.carregar_tela(
                 #     cadastrarDoencas, {"modo": "alterar", "doenca_alterar": item["values"]})
             else:
@@ -108,4 +110,11 @@ class ConsultarPaciente(tk.Frame):
 
     def voltar(self, controller):
         from telas.tela_paciente import Pacientes
-        controller.carregar_tela(Pacientes)
+        from telas.registro_atendimento import RegistrarAtendimento
+
+        # Verifica por onde estou acessando e me retorna pro lugar certo
+        if self.acessado_pela_tela == 'pacientes':
+            controller.carregar_tela(Pacientes)
+        else:
+            controller.carregar_tela(RegistrarAtendimento, {
+                                     "paciente": self.paciente_dados, "acessado_pela_tela": "pacientes", })

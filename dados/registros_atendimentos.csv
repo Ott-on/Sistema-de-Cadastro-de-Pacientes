@@ -1,1 +1,2 @@
-cpf_paciente;data_atendimento;peso_paciente;altura_paciente;relato_paciente;anotacoes_medico;exames_passados;diagnostico_medico;codigo_cid;tratamento_ou_medicamentos_prescritos;
+cpf_paciente;data_atendimento;hora_atendimento;peso_paciente;altura_paciente;relato_paciente;anotacoes_medico;exames_passados;diagnostico_medico;codigo_cid;tratamento_ou_medicamentos_prescritos
+12345678910;18/06/2023;20:32:15;dgds;gdsg;dgsgd;dsggds;gdssdg;gdsgd;gdsgds;gdsg

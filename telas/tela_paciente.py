@@ -90,14 +90,17 @@ class Pacientes(tk.Frame):
             if selected_item:
                 item = self.treeview.item(selected_item)
                 controller.carregar_tela(
-                    ConsultarPaciente, {"paciente": item["values"]})
+                    ConsultarPaciente, {"paciente": item["values"], "acessado_pela_tela": "pacientes", })
 
         def atender():
+            from telas.registro_atendimento import RegistrarAtendimento
             # Lógica para atender
             selected_item = self.treeview.selection()
             if selected_item:
                 item = self.treeview.item(selected_item)
-                print("Atender:", item["values"])
+                # print("Atender:", item["values"])
+                controller.carregar_tela(
+                    RegistrarAtendimento, {"paciente": item["values"], "acessado_pela_tela": "pacientes", })
 
         def alterar():
             from telas.paciente_cadastro import cadastrarPacientes

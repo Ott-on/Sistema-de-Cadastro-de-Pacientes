@@ -49,9 +49,6 @@ class SistemaPacientes:
         df.to_csv(self.arquivo_csv, index=False,
                   sep=';', mode='a', header=False)
 
-        lido = pd.read_csv(self.arquivo_csv)
-        print(lido)
-
     def remover(self, cpf, nome):
         # Lê o arquivo CSV dos pacientes
         tabela_pacientes = pd.read_csv(self.arquivo_csv, sep=';')
