@@ -30,7 +30,7 @@ class tkinterApp(tk.Tk):
 
         self.create_frames()
 
-        self.show_frame(MenuOpcoes)
+        self.show_frame(LoginMedico)
 
     def create_frames(self):
         # Cria as instâncias dos frames e armazena em um dicionário

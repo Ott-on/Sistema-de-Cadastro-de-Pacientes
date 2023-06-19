@@ -16,8 +16,6 @@ class Relatorio(tk.Frame):
         tk.Frame.__init__(self, parent)
         self.configure(bg='#242323')
 
-        print('ded')
-
         sistema_relatorio = SistemaRelatorios()
         self.todos_atendimentos = sistema_relatorio.obter_todos_atendimentos()
 
