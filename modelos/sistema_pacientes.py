@@ -17,6 +17,8 @@ class SistemaPacientes:
     def obter_pacientes(self):
         tabela_pacientes = pd.read_csv(self.arquivo_csv, sep=";")
         pacientes = []
+
+        # adiciona cada linha do arquivo na lista pacientes
         for _, row in tabela_pacientes.iterrows():
             paciente = (
                 row['cpf'],
@@ -33,6 +35,8 @@ class SistemaPacientes:
 
     # Metodo para cadastrar paciente
     def cadastrar(self, paciente: Paciente):
+        
+        # cria um dicionario com todas os dados do paciente
         dados = {
             "nome": [paciente.nome],
             "cpf": [paciente.cpf],
