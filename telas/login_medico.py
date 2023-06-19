@@ -1,5 +1,5 @@
 import tkinter as tk
-from tkinter import RAISED, RIDGE, Button, Entry, Label, PhotoImage, messagebox
+from tkinter import END, RAISED, RIDGE, Button, Entry, Label, PhotoImage, messagebox
 from modelos.sistema_medico import SistemaMedico
 from telas.cadastro_medico import CadastroMedico
 from telas.menu_opcoes import MenuOpcoes
@@ -60,6 +60,10 @@ class LoginMedico(tk.Frame):
             "Arial", 10, "underline"), activebackground='#242323', bg='#242323', fg='#02bae8', relief='solid', overrelief='solid', borderwidth=0, highlightthickness=0)
         botao_cadastro.place(x=845, y=400)
 
+    def limpar_campos(self):
+        self.entrada_usuario.delete(0, END)
+        self.entrada_senha.delete(0, END)
+
     def fazer_login(self, sistema_medico: SistemaMedico, controller):
         usuario = self.entrada_usuario.get()
         senha = self.entrada_senha.get()
@@ -70,7 +74,7 @@ class LoginMedico(tk.Frame):
             # print("médico:", usuario)
             # print("senha:", senha)
             sistema_medico.login(
-                usuario, senha, transacao_tela=lambda: controller.show_frame(MenuOpcoes))
+                usuario, senha, self.limpar_campos, transacao_tela=lambda: controller.show_frame(MenuOpcoes))
 
         else:
             # Aqui exibimos um popup de aviso pedindo para os campos serem preenchidos
@@ -80,4 +84,4 @@ class LoginMedico(tk.Frame):
     def fazer_cadastro(self, sistema_medico: SistemaMedico, controller):
         # Função para realizar o cadastro
         controller.show_frame(CadastroMedico)
-        print("Cadastro realizado!")
+        self.limpar_campos()

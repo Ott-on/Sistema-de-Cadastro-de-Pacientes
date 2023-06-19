@@ -11,7 +11,8 @@ class SistemaMedico:
         # Verificar se o arquivo existe
         if not os.path.isfile(self.arquivo_csv):
             # Criar o arquivo e adicionar os cabeçalhos das colunas
-            df_cabecalho = pd.DataFrame(columns=["CRM", "Nome_do_Medico", "usuarios", "senhas"])
+            df_cabecalho = pd.DataFrame(
+                columns=["CRM", "Nome_do_Medico", "usuarios", "senhas"])
             df_cabecalho.to_csv(self.arquivo_csv, index=False, sep=';')
 
     # Método para cadastrar médico
@@ -33,7 +34,7 @@ class SistemaMedico:
             "Sucesso", "Médico cadastrado com sucesso! Faça Login para entrar em sua conta")
         transacao_tela()
 
-    def login(self, usuario, senha, transacao_tela):
+    def login(self, usuario, senha, limpar_campos, transacao_tela):
         # Lendo os dados da planilha de médicos
         usuarios_df = pd.read_csv(self.arquivo_csv, sep=';')
 
@@ -46,12 +47,13 @@ class SistemaMedico:
                                                == usuario, "senhas"].values[0]
             print(usuarios_df)
             print(usuarios_df.loc[usuarios_df["usuarios"]
-                                               == usuario, "senhas"].values[0])
+                                  == usuario, "senhas"].values[0])
 
             if str(senha) == str(senha_registrada):
                 # Usuário e senha corretos
                 messagebox.showinfo("Sucesso", "Login bem-sucedido")
                 transacao_tela()
+                limpar_campos()
             else:
                 # Senha incorreta
                 messagebox.showerror("Erro", "Senha incorreta")
