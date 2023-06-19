@@ -6,10 +6,13 @@ from tkinter.ttk import Treeview
 from tkcalendar import DateEntry
 import datetime
 
+
 class Relatorio(tk.Frame):
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
         self.configure(bg='#242323')
+
+        print('ded')
 
         sistema_pacientes = SistemaPacientes()
         self.pacientes = sistema_pacientes.obter_pacientes()
@@ -25,7 +28,8 @@ class Relatorio(tk.Frame):
         # botão pesquisar:
         img2 = PhotoImage(file='imagens/pesquisar.png')
         button_image = Button(self, image=img2, bg='#02bae8', fg='#02bae8', activebackground='#02bae8',
-                              command=lambda: self.pesquisar(sistema_pacientes, controller),
+                              command=lambda: self.pesquisar(
+                                  sistema_pacientes, controller),
                               relief='solid', overrelief='solid', borderwidth=0, highlightthickness=0)
         button_image.image = img2
         button_image.place(x=920, y=10)
@@ -40,10 +44,6 @@ class Relatorio(tk.Frame):
         entrada_nascimento.place(x=120, y=40)
 
         self.entrada_nascimento = entrada_nascimento
-
-        # Colocando para começar em 30 01 1995 o DateEntry
-        data_padrao = datetime.date(1995, 1, 30)
-        self.entrada_nascimento.set_date(data_padrao)
 
         # entrada da pesquisa por código CID:
         label_cid = Label(self, width=15, height=2, text='Código CID:', font=(
@@ -75,7 +75,6 @@ class Relatorio(tk.Frame):
             '<KeyRelease>', lambda event: self.__verificar_campo_pesquisa())
         entrada_pesquisa.bind(
             '<KeyRelease>', lambda event: self.__verificar_campo_pesquisa())
-        
 
         # Voltar
         img = PhotoImage(file='imagens/voltar_label.png')
@@ -85,7 +84,6 @@ class Relatorio(tk.Frame):
         button_image.image = img
         button_image.place(x=10, y=10)
 
-
         # Texto de título da página relatório
         label_selecionar_paciente = Label(self, width=30, height=2, text='Relatório dos pacientes classificados:', font=(
             "Arial", 18), bg='#242323', fg='#888a89')
@@ -93,8 +91,8 @@ class Relatorio(tk.Frame):
 
         self.treeview = Treeview(self, columns=(
             "CPF", "Nome", "Email", "Telefone", "Celular", "Data_Nascimento", "Sexo", "Estado_Civil"), height=21,
-                                 show="headings")
-        
+            show="headings")
+
         self.treeview.column("CPF", width=100)
         self.treeview.column("Email", width=150)
         self.treeview.column("Telefone", width=120)
@@ -115,6 +113,8 @@ class Relatorio(tk.Frame):
 
         self.treeview.place(x=10, y=150)
 
+        # Data | codigo CID | Nome | Telefone | celular | sexo
+
         for dado in self.pacientes:
             self.treeview.insert("", "end", values=dado)
 
@@ -128,7 +128,7 @@ class Relatorio(tk.Frame):
             self.treeview.delete(*self.treeview.get_children())
             for dado in self.pacientes:
                 self.treeview.insert("", "end", values=dado)
-        
+
     def pesquisar(self, sistema_pacientes: SistemaPacientes, controller):
 
         # Obtendo os valores selecionados

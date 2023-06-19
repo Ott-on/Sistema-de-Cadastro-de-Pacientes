@@ -41,7 +41,6 @@ L70;Acne
 M54;Dor nas costas
 N30;Cistite
 O60;Trabalho de parto prematuro
-P22;Asfixia ao nascer
 Q05;Espinha bífida
 R06;Anormalidades de batimento cardíaco e ritmo
 S72;Fratura do fêmur
@@ -49,4 +48,4 @@ T81;Complicação de procedimento
 U06;Infecção por COVID-19 confirmada
 V09;Acidente de bicicleta
 W65;Afogamento e submersão acidental
-XXX;TES7
+P22;Asfixia ao nascer

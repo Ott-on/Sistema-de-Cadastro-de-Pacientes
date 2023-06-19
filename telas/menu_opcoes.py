@@ -2,7 +2,6 @@ import tkinter as tk
 from tkinter import RAISED, Button, Label, PhotoImage
 
 
-
 class MenuOpcoes(tk.Frame):
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
@@ -48,4 +47,4 @@ class MenuOpcoes(tk.Frame):
 
     def relatorio(self, controller):
         from telas.relatorio import Relatorio
-        controller.show_frame(Relatorio)
+        controller.carregar_tela(Relatorio)

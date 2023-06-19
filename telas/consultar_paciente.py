@@ -91,13 +91,26 @@ class ConsultarPaciente(tk.Frame):
         scrollbar.configure(command=self.treeview.yview)
 
         def visualizar_dados_atendimentos():
-            # Lógica para alterar
+            from telas.ver_dados_atendimento import VerAtendimento
             selected_item = self.treeview.selection()
             if selected_item:
                 item = self.treeview.item(selected_item)
-                print(item["values"])
-                # controller.carregar_tela(
-                #     cadastrarDoencas, {"modo": "alterar", "doenca_alterar": item["values"]})
+                dados = {
+                    "nome_paciente": self.paciente_dados[1],
+                    "cpf_paciente": item["values"][2],
+                    "data_atendimento": item["values"][3],
+                    "hora_atendimento": item["values"][4],
+                    "peso_paciente": item["values"][5],
+                    "altura_paciente": item["values"][6],
+                    "relato_paciente": item["values"][7],
+                    "anotacoes_medico": item["values"][8],
+                    "exames_passados": item["values"][9],
+                    "diagnostico_medico": item["values"][10],
+                    "codigo_cid": item["values"][11],
+                    "tratamento_ou_medicamentos_prescritos": item["values"][12],
+                }
+                controller.carregar_tela(
+                    VerAtendimento, {"atendimento_dados": dados})
             else:
                 messagebox.showinfo(
                     "Aviso!", "Selecione um item do historico de atendimentos para visualizar os seus dados!", icon="warning")

@@ -120,7 +120,7 @@ class RegistrarAtendimento(tk.Frame):
         entrada_exames = Entry(self, width=10, font=(
             "Arial", 25), bg='#636262', highlightthickness=0.5, relief='solid')
         entrada_exames.place(x=680, y=340)
-        label_exames = Label(self, width=10, height=2, text='Tratamento:', font=(
+        label_exames = Label(self, width=16, anchor='w', height=2, text='Exames Passados:', font=(
             "Arial", 10), bg='#242323', fg='#888a89')
         label_exames.place(x=680, y=300)
 

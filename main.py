@@ -1,16 +1,11 @@
 import tkinter as tk
 from tkinter import PhotoImage, ttk
-from telas.consultar_paciente import ConsultarPaciente
-
 from telas.login_medico import LoginMedico
 from telas.cadastro_medico import CadastroMedico
 from telas.menu_opcoes import MenuOpcoes
-from telas.relatorio import Relatorio
-from telas.tela_paciente import Pacientes
 from telas.paciente_cadastro import cadastrarPacientes
 from telas.cadastro_doenca import cadastrarDoencas
 from telas.registro_atendimento import RegistrarAtendimento
-from telas.ver_dados_atendimento import VerAtendimento
 LARGEFONT = ("Verdana", 35)
 
 
@@ -39,7 +34,7 @@ class tkinterApp(tk.Tk):
 
     def create_frames(self):
         # Cria as instâncias dos frames e armazena em um dicionário
-        for F in (LoginMedico, CadastroMedico, MenuOpcoes, Relatorio, cadastrarPacientes, cadastrarDoencas, RegistrarAtendimento, VerAtendimento):
+        for F in (LoginMedico, CadastroMedico, MenuOpcoes, cadastrarPacientes, cadastrarDoencas, RegistrarAtendimento):
             frame = F(self.container, self)
             self.frames[F] = frame
             frame.grid(row=0, column=0, sticky="nsew")

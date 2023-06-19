@@ -1,2 +1,10 @@
 cpf_paciente;data_atendimento;hora_atendimento;peso_paciente;altura_paciente;relato_paciente;anotacoes_medico;exames_passados;diagnostico_medico;codigo_cid;tratamento_ou_medicamentos_prescritos
-12345678910;18/06/2023;20:32:15;dgds;gdsg;dgsgd;dsggds;gdssdg;gdsgd;gdsgds;gdsg
+98127634567;01/02/2023;08:30;70;1.75;Paciente apresentando febre e tosse persistente;Realizar exame de sangue completo;Exame de sangue anterior apresentou leucocitose;Infecção respiratória aguda;J45;Prescrição de antibiótico e repouso
+98127634567;10/05/2023;14:15;68;1.72;Paciente com dor de garganta e dificuldade para engolir;Prescrever exame de cultura de garganta;Cultura de garganta anterior mostrou infecção por estreptococos;Faringite estreptocócica;J02;Prescrição de antibiótico e repouso
+98127634567;20/08/2023;09:45;72;1.78;Paciente com dor no peito e falta de ar;Solicitar ecocardiograma;Ecocardiograma anterior mostrou disfunção ventricular;Insuficiência cardíaca congestiva;I50;Prescrição de medicamentos diuréticos e restrição de sal
+12345678910;15/05/2023;14:45;65;1.68;Paciente com dor abdominal intensa e vômitos;Solicitar ultrassom abdominal;Ultrassom abdominal prévio apresentou cálculos na vesícula;Colecistite aguda;K80;Indicação de cirurgia para remoção da vesícula
+12345678910;02/06/2023;11:30;66;1.70;Paciente com febre e dor nas articulações;Realizar teste sorológico para detecção de doenças autoimunes;Teste sorológico anterior apresentou anticorpos antinucleares positivos;Artrite reumatoide;M05;Prescrição de anti-inflamatórios e encaminhamento para reumatologista
+12345678910;18/09/2023;16:20;67;1.69;Paciente com fraqueza e palidez;Solicitar exame de sangue para avaliação dos níveis de ferro;Exame de sangue anterior mostrou anemia ferropriva;Anemia por deficiência de ferro;D50;Prescrição de suplemento de ferro e orientações sobre alimentação
+54321678901;20/09/2023;10:15;80;1.80;Paciente com dores articulares e rigidez matinal;Solicitar radiografia das articulações;Radiografia anterior mostrou sinais de osteoartrite;Osteoartrite;M17;Prescrição de anti-inflamatórios e fisioterapia
+54321678901;05/11/2023;09:00;81;1.82;Paciente com dor nas costas e formigamento nas pernas;Solicitar ressonância magnética da
+

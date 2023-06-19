@@ -1,3 +1,7 @@
 nome;cpf;email;telefone;celular;data_nascimento;sexo;estado_civil
-otton;12345678910;otton@gmail.com;12345678910;12345678910;24/04/2007;Masculino;Casado
-vitor;98127634567;vitor@gmail.com;98125342882;81955555;11/01/1995;Masculino;Solteiro
+João da Silva;98127634567;joao.silva@example.com;112345678;11987654321;05/08/1985;Masculino;Casado
+Maria Souza;12345678910;maria.souza@example.com;2245678901;22987654321;12/03/1990;Feminino;Solteira
+Carlos Ferreira;54321678901;carlos.ferreira@example.com;3367890123;33987654321;20/07/1978;Masculino;Divorciado
+Ana Santos;45678123901;ana.santos@example.com;4489012345;44987654321;28/11/1982;Feminino;Casada
+Pedro Lima;10987654321;pedro.lima@example.com;5501234567;55987654321;09/09/1975;Masculino;Viúvo
+
