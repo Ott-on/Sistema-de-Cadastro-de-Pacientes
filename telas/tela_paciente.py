@@ -84,6 +84,10 @@ class Pacientes(tk.Frame):
         self.treeview.configure(yscrollcommand=scrollbar.set)
         scrollbar.configure(command=self.treeview.yview)
 
+        def aviso_nao_selecionado():
+            messagebox.showinfo(
+                "Aviso!", "Selecione um paciente tocando sobre ele para executar uma ação", icon="warning")
+
         def consultar():
             # Lógica para atender
             selected_item = self.treeview.selection()
@@ -91,6 +95,8 @@ class Pacientes(tk.Frame):
                 item = self.treeview.item(selected_item)
                 controller.carregar_tela(
                     ConsultarPaciente, {"paciente": item["values"], "acessado_pela_tela": "pacientes", })
+            else:
+                aviso_nao_selecionado()
 
         def atender():
             from telas.registro_atendimento import RegistrarAtendimento
@@ -101,6 +107,8 @@ class Pacientes(tk.Frame):
                 # print("Atender:", item["values"])
                 controller.carregar_tela(
                     RegistrarAtendimento, {"paciente": item["values"], "acessado_pela_tela": "pacientes", })
+            else:
+                aviso_nao_selecionado()
 
         def alterar():
             from telas.paciente_cadastro import cadastrarPacientes
@@ -110,6 +118,8 @@ class Pacientes(tk.Frame):
                 item = self.treeview.item(selected_item)
                 controller.carregar_tela(
                     cadastrarPacientes, {"modo": "alterar", "paciente_alterar": item["values"]})
+            else:
+                aviso_nao_selecionado()
 
         def excluir():
             # Lógica para excluir
@@ -119,6 +129,8 @@ class Pacientes(tk.Frame):
                 sistema_pacientes.remover(
                     cpf=item["values"][0], nome=item["values"][1])
                 controller.carregar_tela(Pacientes)
+            else:
+                aviso_nao_selecionado()
 
         frame = tk.Frame(self)
         frame.place(x=400, y=95)
