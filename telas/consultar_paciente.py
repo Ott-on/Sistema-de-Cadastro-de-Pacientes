@@ -82,9 +82,10 @@ class ConsultarPaciente(tk.Frame):
 
         self.treeview.place(x=10, y=300)
 
-        for dado in self.registro_atendimentos:
-            novo_dado = (dado[2], dado[1], *dado)
-            self.treeview.insert("", "end", values=novo_dado)
+        if self.registro_atendimentos:
+            for dado in self.registro_atendimentos:
+                novo_dado = (dado[2], dado[1], *dado)
+                self.treeview.insert("", "end", values=novo_dado)
 
         self.treeview.configure(yscrollcommand=scrollbar.set)
         scrollbar.configure(command=self.treeview.yview)
