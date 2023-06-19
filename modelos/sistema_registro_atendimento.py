@@ -15,21 +15,34 @@ class SistemaAtendimento:
                                         "cpf_paciente", "data_atendimento", "hora_atendimento", "peso_paciente", "altura_paciente", "relato_paciente", "anotacoes_medico", "exames_passados", "diagnostico_medico", "codigo_cid", "tratamento_ou_medicamentos_prescritos", ])
             df_cabecalho.to_csv(self.arquivo_csv, index=False, sep=';')
 
+    def possui_registro(self, cpf):
+        cpf = str(cpf)
+
+        # lê o arquivo csv dos registros
+        tabela_registros = pd.read_csv(self.arquivo_csv, sep=";")
+
+        # busca algum registro
+        registros_procurados = tabela_registros.loc[tabela_registros['cpf_paciente'].astype(
+            str).str.contains(cpf)]
+
+        # Se houver registros encontrados, retorna true senão false
+        return not registros_procurados.empty
+
     def consultar_registros(self, cpf):
         # Converter o buscador para string
         cpf = str(cpf)
 
-        # lê o arquivo csv dos pacientes
-        tabela_pacientes = pd.read_csv(self.arquivo_csv, sep=";")
+        # lê o arquivo csv dos registros
+        tabela_registros = pd.read_csv(self.arquivo_csv, sep=";")
 
         # Verificar se o buscador é um CPF válido
-        pacientes_procurados = tabela_pacientes.loc[tabela_pacientes['cpf_paciente'].astype(
+        registros_procurados = tabela_registros.loc[tabela_registros['cpf_paciente'].astype(
             str).str.contains(cpf)]
 
-        # Se houver pacientes encontrados, retorna as informações como uma lista de tuplas
-        if not pacientes_procurados.empty:
+        # Se houver registros encontrados, retorna as informações como uma lista de tuplas
+        if not registros_procurados.empty:
             registros_atendimentos_info = []
-            for _, registro in pacientes_procurados.iterrows():
+            for _, registro in registros_procurados.iterrows():
                 registro_atendimento_info = (
                     registro["cpf_paciente"],
                     registro["data_atendimento"],
@@ -47,7 +60,7 @@ class SistemaAtendimento:
 
             return registros_atendimentos_info
 
-        # Retorna None se não houver pacientes encontrados
+        # Retorna None se não houver registros encontrados
         return None
 
     def registrar(self, atendimento: Atendimento):

@@ -15,11 +15,11 @@ class RegistrarAtendimento(tk.Frame):
 
         self.paciente_dados = {}
 
-        if args:
-            self.paciente_dados = args[0]["paciente"]
-
         # Criando uma instancia do sistema atendimento
         sistema_atendimento = SistemaAtendimento()
+
+        if args:
+            self.paciente_dados = args[0]["paciente"]
 
         # retangulo azul da tela
         label_retangulo = Label(self, width=1000, height=4, bg='#02bae8')
