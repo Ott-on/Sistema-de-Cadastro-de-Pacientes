@@ -64,8 +64,6 @@ class Relatorio(tk.Frame):
         entrada_pesquisa.place(x=720, y=10)
 
         # Adicionando um ouvinte de evento que quando digitamos algo chama essa função
-        entrada_pesquisa.bind(
-            '<KeyRelease>', lambda event: self.__verificar_campo_pesquisa())
 
         self.entrada_nascimento = entrada_nascimento
         self.entrada_cid = entrada_cid
@@ -77,7 +75,7 @@ class Relatorio(tk.Frame):
             '<KeyRelease>', lambda event: self.__verificar_campo_pesquisa())
         entrada_pesquisa.bind(
             '<KeyRelease>', lambda event: self.__verificar_campo_pesquisa())
-
+        
 
         # Voltar
         img = PhotoImage(file='imagens/voltar_label.png')
@@ -88,7 +86,7 @@ class Relatorio(tk.Frame):
         button_image.place(x=10, y=10)
 
 
-        # opções
+        # Texto de título da página relatório
         label_selecionar_paciente = Label(self, width=30, height=2, text='Relatório dos pacientes classificados:', font=(
             "Arial", 18), bg='#242323', fg='#888a89')
         label_selecionar_paciente.place(x=10, y=80)
@@ -96,7 +94,7 @@ class Relatorio(tk.Frame):
         self.treeview = Treeview(self, columns=(
             "CPF", "Nome", "Email", "Telefone", "Celular", "Data_Nascimento", "Sexo", "Estado_Civil"), height=21,
                                  show="headings")
-
+        
         self.treeview.column("CPF", width=100)
         self.treeview.column("Email", width=150)
         self.treeview.column("Telefone", width=120)
@@ -126,19 +124,27 @@ class Relatorio(tk.Frame):
     # função que verifica se o campo de pesquisa esta vazio caso esteja ele carrega todos os pacientes
 
     def __verificar_campo_pesquisa(self):
-        if len(self.entrada_nascimento.get()) == 0 or len(self.entrada_cid.get()) == 0 or len(self.entrada_pesquisa.get()) == 0:
+        if len(self.entrada_nascimento.get()) == 0 and len(self.entrada_cid.get()) == 0 and len(self.entrada_pesquisa.get()) == 0:
             self.treeview.delete(*self.treeview.get_children())
             for dado in self.pacientes:
                 self.treeview.insert("", "end", values=dado)
         
     def pesquisar(self, sistema_pacientes: SistemaPacientes, controller):
 
-        periodo_selecionado = self.entrada_nascimento
+        # Obtendo os valores selecionados
+        periodo_selecionado = self.entrada_nascimento.get()
         doenca_selecionado = self.entrada_cid.get()
         paciente_selecionado = self.entrada_pesquisa.get()
 
-        pacientes_encontrados = sistema_pacientes.consultar(
-            buscador=paciente_selecionado)
+        # Criando um dicionário com os critérios de busca
+        buscador = {
+            'periodo': periodo_selecionado,
+            'doenca': doenca_selecionado,
+            'paciente': paciente_selecionado
+        }
+
+        # Chamando o método consultar do sistema de pacientes com o buscador
+        pacientes_encontrados = sistema_pacientes.consultar(buscador=buscador)
 
         if pacientes_encontrados:
             self.treeview.delete(*self.treeview.get_children())
@@ -152,7 +158,3 @@ class Relatorio(tk.Frame):
     def voltar_menu(self, controller):
         from telas.menu_opcoes import MenuOpcoes
         controller.show_frame(MenuOpcoes)
-
-    def cadastrar_pacientes(self, controller):
-        from telas.paciente_cadastro import cadastrarPacientes
-        controller.show_frame(cadastrarPacientes)
